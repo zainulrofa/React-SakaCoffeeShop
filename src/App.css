@@ -13,8 +13,32 @@
   }
 }
 
-.App-header {
+.btn {
+  border: 1px solid black;
+  background-color: aliceblue;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.btn:active {
+  position: relative;
+  top: 1px;
+}
+
+.primary {
   background-color: #282c34;
+}
+
+.secondary {
+  background-color: #28342a
+}
+
+.App-header {
   min-height: 100vh;
   display: flex;
   flex-direction: column;

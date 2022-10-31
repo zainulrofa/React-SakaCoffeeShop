@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;900&display=swap');
+*, *::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+.content {
+    background-color: #ececec;
+    margin-bottom: 5rem;
+}
+
+.title {
+    padding: 2rem 0 1rem;
+}
+
+.title p {
+    color: #4F5665;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.title span {
+    color: #6A4029;
+    font-weight: 700;
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4rem;
+    gap: 1rem;
+}
+
+.left-content h1 {
+    font-size: 4rem;
+    font-weight: 900;
+}
+
+.left-content h3 {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.product-img img {
+    border-radius: 50%;
+}
+
+.right-content {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 20px;
+}
+
+.right-content .title {
+    padding-bottom: 1rem;
+}
+
+.title .top {
+    width: 65%;
+}
+
+.title .bottom {
+    width: 90%;
+}
+
+.right-content p {
+    color: #6A4029;
+    font-size: 1.5rem;
+}
+
+.size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.size .title h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.choice {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.circle {
+    background-color: #FFBA33;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.circle:active {
+    position: relative;
+    top: 2px;
+}
+
+.circle p {
+    color: black;
+    font-weight: 700;
+    padding: 1rem;
+    margin: 0;
+}
+
+.circle .reg {
+    padding: 1rem 1.5rem;
+}
+
+.circle .lar {
+    padding: 1rem 1.5rem;
+}
+
+
+.deliv-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.deliv-method .title {
+    padding: 2rem 0;
+    
+}
+
+.deliv-method .title h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.methods {
+    display: flex;
+    gap: 2rem;
+}
+
+.methods .bar {
+    background-color: #F4F4F8;
+    padding: .5rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.methods .bar:hover {
+    background-color: #6A4029;
+    color: white;
+}
+
+.methods .bar p {
+    color: #9F9F9F;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.methods .bar p:hover {
+    color: white;
+}
+
+.set-time {
+    display: flex;
+    padding: 2rem 0;
+    gap: 1rem;
+}
+
+.set-time label {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.set-time input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 40vh;
+    border-bottom: 1px solid #9F9F9F;
+}
+
+.set-time input [placeholder] {
+    width: 1rem;
+}
+
+.cta {
+    position: relative;
+    top: 5rem;
+}
+
+.checkout-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.34);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.checkout-img img {
+    border-radius: 50%;
+    width: 5rem;
+}
+
+.checkout-detail {
+    text-align: left;
+}
+
+.checkout-detail h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.check-count {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.btn .circle {
+    background-color: rgba(231, 170, 54, 0.52);
+    padding: 1rem;
+}
+
+.qty p {
+    font-size: 1rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+.btn p {
+    position: absolute;
+    color: #6A4029;
+    top: -.2rem;
+    left: .6rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+    user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .title {
+        padding-top: 8rem;
+    }
+
+    .right-content .title .top {
+        width: 70%;
+    }
+
+    .cta {
+        gap: 2rem;
+        top: 0;
+        padding-bottom: 2rem;
+    }
+}

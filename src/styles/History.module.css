@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;900&display=swap');
+*, *::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+.content {
+    background-image: url(../assets/img/tyler-nix-jE-27l7V3NU-unsplash\ 2.png);
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.title {
+    color: white;
+    padding: 5rem 0;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .title {
+        padding-top: 10rem;
+    }
+}
