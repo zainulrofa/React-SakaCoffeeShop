@@ -7,8 +7,26 @@ import Button from "../components/Button";
 import largeProfile from "../assets/img/image 39-1.png";
 import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
+import { useState } from "react";
+import { getProfile } from "../helpers/fetch";
 
 function Profile({ navigate }) {
+  const token = JSON.parse(localStorage.getItem("userInfo")).token;
+  const [profile, setProfile] = useState({});
+  const requestProfile = async (token) => {
+    try {
+      const res = await getProfile(token);
+      console.log(res);
+      setProfile(res.data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useState(() => {
+    requestProfile(token);
+    console.log(profile);
+  }, []);
+
   return (
     <>
       <Header />
@@ -37,9 +55,9 @@ function Profile({ navigate }) {
                       <img src={pencil} alt="edit" />
                     </div>
                   </div>
-                  <h2>Zulaikha</h2>
-                  <p>zulaikha17@gmail.com</p>
-                  <h3>Has been ordered 15 products</h3>
+                  <h2>{profile.display_name || "your name here"}</h2>
+                  <p>{profile.email}</p>
+                  <h3>Has been ordered 1 products</h3>
                 </div>
               </div>
               <div className={`${styles["right-content"]} col-lg-8`}>
@@ -53,17 +71,29 @@ function Profile({ navigate }) {
                       <div className={styles["left-contact"]}>
                         <div className={styles["input-div"]}>
                           <label for="emailaddress">Email Address:</label>
-                          <input type="text" id="emailaddress" />
+                          <input
+                            type="text"
+                            id="emailaddress"
+                            value={profile.email}
+                          />
                         </div>
                         <div className={styles["input-div"]}>
                           <label for="deliveryaddress">Delivery Address:</label>
-                          <input type="text" id="deliveryaddress" />
+                          <input
+                            type="text"
+                            id="deliveryaddress"
+                            value={profile.address}
+                          />
                         </div>
                       </div>
                       <div className={styles["right-contact"]}>
                         <div className={styles["input-div"]}>
                           <label for="mobilenumber">Mobile Number:</label>
-                          <input type="tel" id="mobilenumber" />
+                          <input
+                            type="tel"
+                            id="mobilenumber"
+                            value={profile.phone}
+                          />
                         </div>
                       </div>
                     </div>
@@ -121,21 +151,37 @@ function Profile({ navigate }) {
                       <div className={styles["left-profile"]}>
                         <div className={styles["input-div"]}>
                           <label for="displayname">Display name:</label>
-                          <input type="text" id="displayname" />
+                          <input
+                            type="text"
+                            id="displayname"
+                            value={profile.display_name || "your name here"}
+                          />
                         </div>
                         <div className={styles["input-div"]}>
                           <label for="firstname">First name:</label>
-                          <input type="text" id="firstname" />
+                          <input
+                            type="text"
+                            id="firstname"
+                            value={profile.display_name || "your name here"}
+                          />
                         </div>
                         <div className={styles["input-div"]}>
                           <label for="lastname">Last name:</label>
-                          <input type="text" id="lastname" />
+                          <input
+                            type="text"
+                            id="lastname"
+                            value={profile.first_name || "your name here"}
+                          />
                         </div>
                       </div>
                       <div className={styles["right-profile"]}>
                         <div className={styles["input-div"]}>
                           <label for="date">DD/MM/YY:</label>
-                          <input type="text" placeholder="DD/MM/YY" />
+                          <input
+                            type="text"
+                            placeholder="DD/MM/YY"
+                            value={profile.birthday}
+                          />
                         </div>
                         <div className={styles.gender}>
                           <div className={styles.male}>
@@ -182,7 +228,15 @@ function Profile({ navigate }) {
                       navigate("/signup");
                     }}
                   >
-                    <Button text="Log out" variant="color-2" font="style-2" />
+                    <Button
+                      text="Log out"
+                      variant="color-2"
+                      font="style-2"
+                      onClick={() => {
+                        localStorage.removeItem("userInfo");
+                        navigate("/login");
+                      }}
+                    />
                   </div>
                 </div>
               </div>

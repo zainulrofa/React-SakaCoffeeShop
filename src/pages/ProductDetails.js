@@ -6,6 +6,9 @@ import styles from "../styles/ProductDetails.module.css";
 import withNavigate from "../helpers/withNavigate";
 
 import ColdBrew from "../assets/img/image 25.png";
+import { useParams } from "react-router-dom";
+import { getData } from "../helpers/fetch";
+import { useEffect } from "react";
 
 function ProductDetails({ navigate }) {
   // const [state, setState] = useState({ count: 0, size: "size" });
@@ -29,6 +32,31 @@ function ProductDetails({ navigate }) {
   //     return { count: prevState.count + 1 };
   //   });
   // }
+
+  const [product, setProduct] = useState({
+    product_name: "",
+    price: "",
+    image: "",
+    category_name: "",
+    description: "",
+    sold: "",
+  });
+  const { id } = useParams();
+
+  const fetchData = async () => {
+    try {
+      const res = await getData(`/products/${id}`);
+      console.log(res.data.result.data);
+      setProduct({ product, ...res.data.result.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log(product);
+  }, []);
 
   const [count, setCount] = useState(0);
   const [size, setSize] = useState("Size");
@@ -62,7 +90,7 @@ function ProductDetails({ navigate }) {
             <div className="col-12">
               <div className={styles.title}>
                 <p>
-                  Favorite & Promo <span>&gt; Cold Brew</span>
+                  Favorite & Promo <span>&gt; {product.product_name}</span>
                 </p>
               </div>
             </div>
@@ -73,10 +101,13 @@ function ProductDetails({ navigate }) {
             <div className="col-lg-5 col-12 pb-5">
               <div className={styles["left-content"]}>
                 <div className={styles["product-img"]}>
-                  <img src={ColdBrew} alt="cold-brew"></img>
+                  <img
+                    src={`http://localhost:8060/${product.image}`}
+                    alt="cold-brew"
+                  ></img>
                 </div>
-                <h1>COLD BREW</h1>
-                <h3>IDR 30.000</h3>
+                <h1>{product.product_name}</h1>
+                <h3>IDR {product.price}</h3>
                 <Button text="Add to Cart" />
                 <Button text="Ask to Staff" variant="color-1" font="style-1" />
               </div>
@@ -144,10 +175,13 @@ function ProductDetails({ navigate }) {
               <div className={styles["checkout-bar"]}>
                 <div className={styles.left}>
                   <div className={styles["checkout-img"]}>
-                    <img src={ColdBrew} alt="cold-brew"></img>
+                    <img
+                      src={`http://localhost:8060/${product.image}`}
+                      alt="cold-brew"
+                    ></img>
                   </div>
                   <div className={styles["checkout-detail"]}>
-                    <h5>COLD BREW</h5>
+                    <h5>{product.product_name}</h5>
                     <p>
                       x{count}
                       <span> {size}</span>

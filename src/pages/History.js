@@ -3,21 +3,27 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "../styles/History.module.css";
 import Card from "../components/CardHistory";
+import { useState } from "react";
+import { getHistory } from "../helpers/fetch";
+import { useEffect } from "react";
 
 function History() {
-  // const [history, setHistory] = useState([]);
-  // const [url, setUrl] = useState(
-  //   "http://localhost:8060/api/v1/products?page=1"
-  // );
+  const token = JSON.parse(localStorage.getItem("userInfo")).token;
+  const [history, setHistory] = useState([]);
+  const requestHistory = async (token) => {
+    try {
+      const res = await getHistory(token);
+      console.log(res.data.data);
+      setHistory(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       setHistory(res.data.result.result.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [url]);
+  useEffect(() => {
+    requestHistory(token);
+    console.log(history);
+  }, []);
 
   return (
     <>
@@ -35,20 +41,74 @@ function History() {
           <div className="row">
             <div className="col-12">
               <div className={styles.card}>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {/* {history.map((e) => (
+                  <Card
+                    productName={e.product_name}
+                    price={e.price}
+                    status={e.status_name}
+                    image={e.image}
+                  />
+                ))} */}
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
+                <Card
+                  productname="Chocolate Croissant"
+                  price="IDR 25.000"
+                  status="DONE"
+                />
               </div>
             </div>
           </div>

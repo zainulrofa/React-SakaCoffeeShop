@@ -9,13 +9,10 @@ function CardProduct(props) {
     <div
       className={styles["content-bar"]}
       onClick={() => {
-        props.navigate("/product-detail");
+        props.navigate(`/product-detail/${props.id}`);
       }}
     >
-      <img
-        src={`http://localhost:8060/${props.image}`}
-        alt="Veggie tomato mix"
-      />
+      <img src={`http://localhost:8060/${props.image}`} alt="" />
       <h2>{props.text}</h2>
       <h3>{props.price}</h3>
     </div>

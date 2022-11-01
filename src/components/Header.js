@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import styles from "../styles/Header.module.css";
 import withNavigate from "../helpers/withNavigate";
+import HeaderLogin from "../components/HeaderLogin";
+import NavbarSignup from "../components/NavbarSignup";
 
 import sakaLogo from "../assets/img/sakacoffee.png";
 import searching from "../assets/img/Searching.png";
@@ -11,6 +13,10 @@ import smallProfile from "../assets/img/image 39.png";
 function Header({ navigate }) {
   const [state, setState] = useState("");
   const text = state.text;
+  const title = state.title;
+  const token = JSON.parse(localStorage.getItem("userInfo"))
+    ? JSON.parse(localStorage.getItem("userInfo")).token
+    : "";
 
   function slide() {
     setState((state) => ({
@@ -18,6 +24,12 @@ function Header({ navigate }) {
         state.text === `${styles["slide-bar"]}` ? "" : `${styles["slide-bar"]}`,
     }));
   }
+
+  // function searchBar() {
+  //   setState((state) => ({
+  //     title: state.title === `${styles.show}` ? "" : `${styles.show}`,
+  //   }));
+  // }
 
   return (
     <nav className={styles.navbar}>
@@ -65,21 +77,7 @@ function Header({ navigate }) {
           </li>
         </ol>
       </div>
-      <div className={styles["right-bar"]}>
-        <img className={styles.searching} src={searching} alt="searching" />
-        <div className={styles.chat}>
-          <div className={styles.notif}>1</div>
-          <img src={chat} alt="" />
-        </div>
-        <div
-          className={styles.profile}
-          onClick={() => {
-            navigate("/profile");
-          }}
-        >
-          <img src={smallProfile} alt="profile" />
-        </div>
-      </div>
+      {token ? <NavbarSignup /> : <HeaderLogin />}
       <div className={styles["menu-toggle"]} onClick={slide}>
         <input type="checkbox" />
         <span></span>

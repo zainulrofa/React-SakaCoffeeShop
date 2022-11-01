@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;900&display=swap');
+*, *::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+.right-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.right-bar .searching {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right-bar .searching input {
+    /* position: absolute;
+    top: -.5rem;
+    right: 0; */
+    /* display: none; */
+    outline: none;
+    border: none;
+    background-color: #EFEEEE;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    opacity: 0;
+    transition: .5s;
+}
+
+.right-bar .searching input.show {
+    opacity: 1;
+    transition: .5s;
+}
+
+.right-bar .searching span p {
+    color: #4F5665;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.right-bar .searching .search-bar input {
+    border: none;
+    outline: 0;
+    background-color: transparent;
+}
+
+.right-bar .searching img {
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.right-bar .chat {
+    position: relative;
+}
+
+.right-bar .chat img {
+    width: 1.5rem;
+}
+
+.right-bar .chat .notif {
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    display: flex;
+    background-color: #6A4029;
+    justify-content: center;
+    align-items: center;
+    font-size: .5rem;
+    font-weight: 700;
+    color: white;
+    border-radius: 50%;
+    left: 1rem;
+    top: -.5rem;
+}
+
+.right-bar .profile img {
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .right-bar {
+        display: none;
+    }
+}

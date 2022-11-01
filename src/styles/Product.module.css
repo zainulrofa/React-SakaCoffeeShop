@@ -51,13 +51,6 @@ a {
     position: relative;
 }
 
-.main-container .left-content .promo-detail .front-bar{
-    position: relative;
-    background-color: #FFCB65;
-    border-radius: 1rem;
-    margin-bottom: 2rem;
-}
-
 .main-container .left-content .promo-detail .med-bar {
     position: absolute;
     height: 75%;
@@ -80,53 +73,6 @@ a {
 
 .main-container .left-content .promo-detail {
     width: 75%;
-}
-
-.promo-detail .front-bar .top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom: 1px dashed black;
-}
-
-.promo-detail .front-bar .top img {
-    border-radius: 50%;
-    margin-top: 1.5rem;
-    padding: 1.5rem ;
-}
-
-.promo-detail .front-bar .top h2 {
-    font-size: 1.3rem;
-}
-
-.promo-detail .front-bar .top p {
-    font-size: .8rem;
-    font-weight: 400;
-    padding-top: .5rem;
-}
-
-.promo-detail .front-bar .bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.promo-detail .front-bar .bottom h4 {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 1.5rem;
-}
-
-.promo-detail .front-bar .bottom h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: .5rem;
-}
-
-.promo-detail .front-bar .bottom p {
-    font-size: .8rem;
-    font-weight: 400;
-    margin-top: 1rem;
 }
 
 .left-content .promo-detail button {

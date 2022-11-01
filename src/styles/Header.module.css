@@ -78,7 +78,46 @@ a {
 }
 
 .navbar .right-bar .searching {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar .right-bar .searching input {
+    /* position: absolute;
+    top: -.5rem;
+    right: 0; */
+    /* display: none; */
+    outline: none;
+    border: none;
+    background-color: #EFEEEE;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    opacity: 0;
+    transition: .5s;
+}
+
+.navbar .right-bar .searching input.show {
+    opacity: 1;
+    transition: .5s;
+}
+
+.navbar .right-bar .searching span p {
+    color: #4F5665;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.navbar .right-bar .searching .search-bar input {
+    border: none;
+    outline: 0;
+    background-color: transparent;
+}
+
+.navbar .right-bar .searching img {
     width: 1.5rem;
+    cursor: pointer;
 }
 
 .navbar .right-bar .chat {

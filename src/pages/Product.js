@@ -4,25 +4,43 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Card from "../components/CardProduct";
+import CardPromo from "../components/CardPromo";
 
-import promoImage from "../assets/img/image 29.png";
+// import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useMemo } from "react";
+import { getData } from "../helpers/fetch";
+import { useLocation } from "react-router-dom";
+
+const useQuery = () => {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+};
 
 function Product() {
+  const getQuery = useQuery();
   const [product, setProduct] = useState([]);
-  const [url, setUrl] = useState(
-    "http://localhost:8060/api/v1/products?limit=12&page=1"
-  );
+  const [query, setQuery] = useState({
+    search: getQuery.get("search") ? getQuery.get("search") : "",
+    categories: getQuery.get("categories") ? getQuery.get("categories") : "",
+    sort: getQuery.get("sort") ? getQuery.get("sort") : "",
+  });
+
+  const fetchData = async (query) => {
+    try {
+      const products = await getData(`/products`, query);
+      setProduct(products.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((res) => {
-        setProduct(res.data.result.result.data);
-      })
-      .catch((err) => console.log(err));
-  }, [url]);
+    fetchData(query);
+    console.log(query);
+    console.log(product);
+  }, [query]);
 
   const currency = (price) => {
     return (
@@ -44,19 +62,11 @@ function Product() {
             <div className={styles["promo-detail"]}>
               <div className={styles["back-bar"]}></div>
               <div className={styles["med-bar"]}></div>
-              <div className={styles["front-bar"]}>
-                <div className={styles.top}>
-                  <img src={promoImage} alt="menu-promo" />
-                  <h2>Beef Spaghetti</h2>
-                  <h2>20% OFF</h2>
-                  <p>Buy 1 Choco Oreo and get 20% off for Beef Spaghetti</p>
-                </div>
-                <div className={styles.bottom}>
-                  <h4>COUPON CODE</h4>
-                  <h3>FNPR15RG</h3>
-                  <p>Valid untill October 10th 2020</p>
-                </div>
-              </div>
+              <CardPromo
+                title="Chocolate Croissant"
+                discount="10%"
+                code="SAKA10"
+              />
               {/* <button type="submit">Apply Coupon</button> */}
               <Button text="Apply Coupon" />
             </div>
@@ -72,10 +82,54 @@ function Product() {
         <main className={styles["right-content"]}>
           <div className={styles["head-content"]}>
             <ul>
-              <li>Favorite Product</li>
-              <li>Coffee</li>
-              <li>Non Coffee</li>
-              <li>Foods</li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    ...query,
+                    sort: "popular",
+                    categories: "",
+                    search: "",
+                  });
+                }}
+              >
+                Favorite Product
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    ...query,
+                    sort: "",
+                    categories: "Coffee",
+                    search: "",
+                  });
+                }}
+              >
+                Coffee
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    ...query,
+                    sort: "",
+                    categories: "Non Coffee",
+                    search: "",
+                  });
+                }}
+              >
+                Non Coffee
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    ...query,
+                    sort: "",
+                    categories: "Foods",
+                    search: "",
+                  });
+                }}
+              >
+                Foods
+              </li>
               <li>Add-on</li>
             </ul>
           </div>
@@ -85,9 +139,10 @@ function Product() {
                 text={e.product_name}
                 price={currency(e.price)}
                 image={e.image}
+                id={e.id}
+                key={e.id}
               />
             ))}
-
             {/* <div className={styles["content-bar"]}>
               <img src={hazelnutImage} alt="Hazelnut Latte" />
               <h2>Hazelnut Latte</h2>

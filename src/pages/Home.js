@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import styles from "../styles/Home.module.css";
+import Header from "../components/Header";
 
 import sakaLogo from "../assets/img/sakacoffee.png";
 import searching from "../assets/img/Searching.png";
@@ -30,79 +31,7 @@ import withNavigate from "../helpers/withNavigate";
 function Home({ navigate }) {
   return (
     <Fragment>
-      <nav className="container-fluid">
-        <div className="container text-center">
-          <div className={`${styles.navbar} row`}>
-            <div className="col-lg-3 align-self-center col-md-4 my-3">
-              <div className={styles.logo}>
-                <div
-                  className={styles["logo-img"]}
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  <img src={sakaLogo} alt="logo" />
-                </div>
-                <p
-                  className={styles["logo-title"]}
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  Saka Coffee Shop
-                </p>
-              </div>
-            </div>
-            <div className="col-lg-5 align-self-center col-md-4">
-              <ul>
-                <li
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  Home
-                </li>
-                <li
-                  onClick={() => {
-                    navigate("/product");
-                  }}
-                >
-                  Product
-                </li>
-                <li>Your Cart</li>
-                <li
-                  onClick={() => {
-                    navigate("/history");
-                  }}
-                >
-                  History
-                </li>
-              </ul>
-            </div>
-            <div className="col-lg-4 align-self-center col-md-4 my-3">
-              <div className={styles.input}>
-                <p
-                  className={styles["btn-login"]}
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Login
-                </p>
-                <button
-                  className={styles["btn-sign"]}
-                  type="submit"
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  Sign up
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Header />
       <main>
         <div className={styles["container-fluid"]}>
           <div className="container text-center">
