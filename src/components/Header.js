@@ -6,14 +6,11 @@ import HeaderLogin from "../components/HeaderLogin";
 import NavbarSignup from "../components/NavbarSignup";
 
 import sakaLogo from "../assets/img/sakacoffee.png";
-import searching from "../assets/img/Searching.png";
-import chat from "../assets/img/chat.png";
-import smallProfile from "../assets/img/image 39.png";
 
 function Header({ navigate }) {
   const [state, setState] = useState("");
   const text = state.text;
-  const title = state.title;
+  // const title = state.title;
   const token = JSON.parse(localStorage.getItem("userInfo"))
     ? JSON.parse(localStorage.getItem("userInfo")).token
     : "";

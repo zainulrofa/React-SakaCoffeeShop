@@ -5,7 +5,6 @@ import Button from "../components/Button";
 import styles from "../styles/ProductDetails.module.css";
 import withNavigate from "../helpers/withNavigate";
 
-import ColdBrew from "../assets/img/image 25.png";
 import { useParams } from "react-router-dom";
 import { getData } from "../helpers/fetch";
 import { useEffect } from "react";
