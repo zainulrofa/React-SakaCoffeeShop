@@ -154,7 +154,7 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="displayname"
-                            value={profile.display_name || "your name here"}
+                            value={profile.display_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -162,7 +162,7 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="firstname"
-                            value={profile.display_name || "your name here"}
+                            value={profile.display_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -170,7 +170,7 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="lastname"
-                            value={profile.first_name || "your name here"}
+                            value={profile.first_name}
                           />
                         </div>
                       </div>
