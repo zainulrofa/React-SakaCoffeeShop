@@ -98,7 +98,6 @@ function Product() {
     }
   };
   const handleCoffee = async () => {
-    console.log("sasa");
     //   setParam({...param,category:'Non Coffe'})
     // getProduct()
     try {

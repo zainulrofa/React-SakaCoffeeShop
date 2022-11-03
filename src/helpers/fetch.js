@@ -29,9 +29,7 @@ export const getProduct = (param) => {
     categories: param.categories ?? "",
     sort: param.sort ?? "id",
   };
-  const URL =
-    process.env.REACT_APP_BACKEND_HOST +
-    `api/v1/products?categories=${queryParam.categories}&sort=${queryParam.sort}&limit=12&page=1`;
+  const URL = `${process.env.REACT_APP_BACKEND_HOST}api/v1/products?categories=${queryParam.categories}&sort=${queryParam.sort}&limit=12&page=1`;
   return axios.get(URL);
 };
 
@@ -42,7 +40,7 @@ export const getProductById = (id) => {
   const URL = process.env.REACT_APP_BACKEND_HOST + `api/v1/products/${id}`;
   return axios.get(URL, {
     headers: {
-      "x-access-token": token,
+      "access-token": token,
     },
   });
 };
