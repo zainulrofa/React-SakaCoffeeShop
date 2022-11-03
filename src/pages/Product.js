@@ -51,6 +51,7 @@ function Product() {
   const getAllProduct = async () => {
     try {
       const result = await getProduct(param);
+      console.log(result);
       setAllProduct(result.data.result.result.data);
     } catch (error) {
       console.log(error);
