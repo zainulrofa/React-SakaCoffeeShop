@@ -22,7 +22,7 @@ a {
 .main-container .left-content {
     display: flex;
     flex-direction: column;
-    width: 150vh;
+    width: 50%;
     padding: 1rem 2rem;
 }
 
@@ -112,6 +112,7 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
     gap: 6rem;
     padding: 2rem;
     border-left: 0.5px solid #9F9F9F;
@@ -141,8 +142,9 @@ a {
 .right-content .content-detail {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 8rem 2rem;
+    padding: 0 3rem;
 }
 
 /* hamburger */
@@ -204,11 +206,24 @@ a {
 
     .right-content .content-detail {
         gap: 8rem 3rem;
+        padding: 0;
+    }
+
+    .right-content .content-detail {
+    justify-content: center;
     }
 }
 
 @media screen and (max-width: 556px) {
     .main-container .right-content ul {
         gap: 1rem;
+    }
+
+    .right-content .content-detail {
+        padding: 0;
+    }
+
+    .right-content .content-detail {
+    justify-content: center;
     }
 }

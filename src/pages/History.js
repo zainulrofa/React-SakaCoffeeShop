@@ -3,26 +3,26 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import styles from "../styles/History.module.css";
 import Card from "../components/CardHistory";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getHistory } from "../helpers/fetch";
-import { useEffect } from "react";
+import withNavigate from "../helpers/withNavigate";
 
-function History() {
-  const token = JSON.parse(localStorage.getItem("userInfo")).token;
-  const [history, setHistory] = useState([]);
-  const requestHistory = async (token) => {
+function History({ navigate }) {
+  const [allHistory, setAllHistory] = useState([]);
+
+  const getAllaHistory = async () => {
+    const result = await getHistory();
+    setAllHistory(result.data.data);
     try {
-      const res = await getHistory(token);
-      console.log(res.data.data);
-      setHistory(res.data.data);
     } catch (error) {
       console.log(error);
+      if (error.response.data.statusCode === 403) {
+        navigate("/login");
+      }
     }
   };
-
   useEffect(() => {
-    requestHistory(token);
-    console.log(history);
+    getAllaHistory();
   }, []);
 
   return (
@@ -49,66 +49,19 @@ function History() {
                     image={e.image}
                   />
                 ))} */}
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
-                <Card
-                  productname="Chocolate Croissant"
-                  price="IDR 25.000"
-                  status="DONE"
-                />
+                {allHistory.map((item, index) => {
+                  // const data = {...item,ceklistItem:dataCeklist, setCeklist:setDataCeklist()}
+                  return (
+                    <Card
+                      key={index}
+                      data={item}
+                      productName={item.product_name}
+                      price={item.price}
+                      status={item.status_name}
+                      image={item.image}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -119,4 +72,4 @@ function History() {
   );
 }
 
-export default History;
+export default withNavigate(History);

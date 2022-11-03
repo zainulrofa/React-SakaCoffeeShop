@@ -6,7 +6,7 @@ import styles from "../styles/ProductDetails.module.css";
 import withNavigate from "../helpers/withNavigate";
 
 import { useParams } from "react-router-dom";
-import { getData } from "../helpers/fetch";
+import { getProductById } from "../helpers/fetch";
 import { useEffect } from "react";
 
 function ProductDetails({ navigate }) {
@@ -32,29 +32,32 @@ function ProductDetails({ navigate }) {
   //   });
   // }
 
-  const [product, setProduct] = useState({
-    product_name: "",
-    price: "",
-    image: "",
-    category_name: "",
-    description: "",
-    sold: "",
-  });
   const { id } = useParams();
-
-  const fetchData = async () => {
+  const [product, setProduct] = useState({});
+  // console.log(product);
+  const currency = (price) => {
+    return (
+      "IDR " +
+      parseFloat(price)
+        .toFixed()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    );
+  };
+  const getDetail = async () => {
     try {
-      const res = await getData(`/products/${id}`);
-      console.log(res.data.result.data);
-      setProduct({ product, ...res.data.result.data });
+      const result = await getProductById(id);
+      // console.log(result.data.result.data);
+      setProduct(result.data.result.data);
     } catch (error) {
       console.log(error);
+      if (error.response.data.statusCode === 403) {
+        navigate("/login");
+      }
     }
   };
 
   useEffect(() => {
-    fetchData();
-    console.log(product);
+    getDetail();
   }, []);
 
   const [count, setCount] = useState(0);
@@ -89,7 +92,8 @@ function ProductDetails({ navigate }) {
             <div className="col-12">
               <div className={styles.title}>
                 <p>
-                  Favorite & Promo <span>&gt; {product.product_name}</span>
+                  {product.category_name}
+                  <span>&gt; {product.product_name}</span>
                 </p>
               </div>
             </div>
@@ -106,7 +110,7 @@ function ProductDetails({ navigate }) {
                   ></img>
                 </div>
                 <h1>{product.product_name}</h1>
-                <h3>IDR {product.price}</h3>
+                <h3> {currency(product.price)}</h3>
                 <Button text="Add to Cart" />
                 <Button text="Ask to Staff" variant="color-1" font="style-1" />
               </div>
@@ -118,12 +122,7 @@ function ProductDetails({ navigate }) {
                     Delivery only on <span>Monday to friday</span> at
                     <span> 1 - 7 pm</span>
                   </p>
-                  <p className={styles.bottom}>
-                    Cold brewing is a method of brewing that combines ground
-                    coffee and cool water and uses time instead of heat to
-                    extract the flavor. It is brewed in small batches and
-                    steeped for as long as 48 hours.
-                  </p>
+                  <p className={styles.bottom}>{product.description}</p>
                 </div>
                 <div className={styles.size}>
                   <div className={styles.title}>

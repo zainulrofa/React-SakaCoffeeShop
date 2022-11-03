@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:8060/api/v1";
+// const baseUrl = "http://localhost:8060/api/v1";
 
 const axiosRequest = (method, url, data) => {
   return axios({
     method,
-    url: `${baseUrl}${url}`,
+    url: `${"http://localhost:8060/api/v1/"}${url}`,
     data,
   });
 };
@@ -15,21 +15,87 @@ export const getData = (url, params, data) => {
 };
 
 export const login = (data) => {
-  return axiosRequest("POST", "/auths/login", data);
+  return axiosRequest("POST", "auths/login", data);
 };
 
-export const getProfile = (token) => {
-  return axios({
-    method: "GET",
-    url: `${baseUrl}/users/`,
-    headers: { "x-access-token": token },
+export const signup = (body) => {
+  const URL = `${process.env.REACT_APP_BACKEND_HOST}api/v1/users`;
+  return axios.post(URL, body);
+};
+
+export const getProduct = (param) => {
+  console.log(param);
+  const queryParam = {
+    categories: param.categories ?? "",
+    sort: param.sort ?? "id",
+  };
+  const URL =
+    process.env.REACT_APP_BACKEND_HOST +
+    `api/v1/products?categories=${queryParam.categories}&sort=${queryParam.sort}&limit=12&page=1`;
+  return axios.get(URL);
+};
+
+export const getProductById = (id) => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  // console.log(token);
+  const URL = process.env.REACT_APP_BACKEND_HOST + `api/v1/products/${id}`;
+  return axios.get(URL, {
+    headers: {
+      "x-access-token": token,
+    },
   });
 };
 
-export const getHistory = (token) => {
-  return axios({
-    method: "GET",
-    url: `${baseUrl}/transactions/history/`,
-    headers: { "x-access-token": token },
+export const getProfile = () => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  console.log(token);
+  const URL =
+    // process.env.REACT_APP_BACKEND_HOST +
+    "http://localhost:8060/api/v1/users/profile_user";
+  return axios.get(URL, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
+export const editProfile = (body) => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  const URL =
+    // process.env.REACT_APP_BACKEND_HOST +
+    "http://localhost:8060/api/v1/users/profile";
+  return axios.patch(URL, body, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
+export const getHistory = () => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  console.log(token);
+  const URL =
+    // process.env.REACT_APP_HOST +
+    `http://localhost:8060/api/v1/transactions/?page=1&limit=15`;
+  return axios.get(URL, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
+export const deleteHistory = (id) => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  console.log(token);
+  const URL = process.env.REACT_APP_HOST + `/transactions/delete_history/${id}`;
+  return axios.delete(URL, {
+    headers: {
+      "access-token": token,
+    },
   });
 };

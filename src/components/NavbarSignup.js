@@ -4,17 +4,38 @@ import withNavigate from "../helpers/withNavigate";
 
 import searching from "../assets/img/Searching.png";
 import chat from "../assets/img/chat.png";
-import smallProfile from "../assets/img/image 39.png";
+// import smallProfile from "../assets/img/image 39.png";
+import { getProfile } from "../helpers/fetch";
+import { useEffect } from "react";
 
 function NavbarSignup({ navigate }) {
-  const [state, setState] = useState("");
-  const title = state.title;
+  const [title, setTitle] = useState("");
+  const [profile, setProfile] = useState({});
 
   function searchBar() {
-    setState((state) => ({
+    setTitle((state) => ({
       title: state.title === `${styles.show}` ? "" : `${styles.show}`,
     }));
   }
+
+  const getDataProfile = async () => {
+    try {
+      const result = await getProfile();
+      // console.log(result.data.result[0]);
+      setProfile(result.data.result[0]);
+      console.log(result);
+    } catch (error) {
+      // console.log(error);
+      // console.log(error.response.data.statusCode);
+      if (error.response.data.statusCode === 403) {
+        navigate("/login");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getDataProfile();
+  }, []);
 
   return (
     <div className={styles["right-bar"]}>
@@ -34,7 +55,7 @@ function NavbarSignup({ navigate }) {
           navigate("/profile");
         }}
       >
-        <img src={smallProfile} alt="profile" />
+        <img src={`http://localhost:8060/${profile.image}`} alt="profile" />
       </div>
     </div>
   );

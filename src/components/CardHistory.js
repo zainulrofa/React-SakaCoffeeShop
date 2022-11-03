@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../styles/CardHistory.module.css";
 
-import veggieImage from "../assets/img/image4.png";
 import bean from "../assets/img/bean.png";
 
 function CardHistory(props) {
@@ -17,7 +16,7 @@ function CardHistory(props) {
       </div>
       <div className={styles["card-bar"]}>
         <div className={styles["card-image"]}>
-          <img src={veggieImage} alt="product"></img>
+          <img src={`http://localhost:8060/${props.image}`} alt="product"></img>
         </div>
         <div className={styles["card-content"]}>
           <h2 className={styles["card-title"]}>{props.productName}</h2>

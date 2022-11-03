@@ -82,6 +82,7 @@
 .right-bar .profile img {
     border-radius: 50%;
     cursor: pointer;
+    width: 2rem;
 }
 
 @media screen and (max-width: 768px) {

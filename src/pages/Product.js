@@ -8,48 +8,112 @@ import CardPromo from "../components/CardPromo";
 
 // import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
-import { useMemo } from "react";
-import { getData } from "../helpers/fetch";
-import { useLocation } from "react-router-dom";
+// import { useMemo } from "react";
+import { getProduct } from "../helpers/fetch";
+// import { useLocation } from "react-router-dom";
 
-const useQuery = () => {
-  const { search } = useLocation();
+// const useQuery = () => {
+//   const { search } = useLocation();
 
-  return useMemo(() => new URLSearchParams(search), [search]);
-};
+//   return useMemo(() => new URLSearchParams(search), [search]);
+// };
 
 function Product() {
-  const getQuery = useQuery();
-  const [product, setProduct] = useState([]);
-  const [query, setQuery] = useState({
-    search: getQuery.get("search") ? getQuery.get("search") : "",
-    categories: getQuery.get("categories") ? getQuery.get("categories") : "",
-    sort: getQuery.get("sort") ? getQuery.get("sort") : "",
+  // const getQuery = useQuery();
+  // const [product, setProduct] = useState([]);
+  // const [query, setQuery] = useState({
+  //   search: getQuery.get("search") ? getQuery.get("search") : "",
+  //   categories: getQuery.get("categories") ? getQuery.get("categories") : "",
+  //   sort: getQuery.get("sort") ? getQuery.get("sort") : "",
+  // });
+
+  // const fetchData = async (query) => {
+  //   try {
+  //     const products = await getData(`/products`, query);
+  //     setProduct(products.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData(query);
+  //   console.log(query);
+  //   console.log(product);
+  // }, [query]);
+
+  const [allProduct, setAllProduct] = useState([]);
+  const [param, setParam] = useState({
+    categories: "",
+    sort: "",
   });
 
-  const fetchData = async (query) => {
+  const getAllProduct = async () => {
     try {
-      const products = await getData(`/products`, query);
-      setProduct(products.data.result.result.data);
+      const result = await getProduct(param);
+      setAllProduct(result.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleNonCofee = async () => {
+    //   setParam({...param,category:'Non Coffe'})
+    // getProduct()
+    try {
+      const body = { ...param, categories: "Non Coffee", sort: "" };
+      console.log(body);
+      setParam(body);
+      const result = await getProduct(body);
+      console.log(result.data.result.result.data);
+      setAllProduct(result.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleFavorite = async () => {
+    try {
+      const body = {
+        ...param,
+        sort: "popular",
+        categories: "",
+      };
+      setParam(body);
+      const result = await getProduct(body);
+      setAllProduct(result.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleFood = async () => {
+    console.log("sasa");
+    //   setParam({...param,category:'Non Coffe'})
+    // getProduct()
+    try {
+      const body = { ...param, categories: "Foods", sort: "" };
+      setParam(body);
+      const result = await getProduct(body);
+      setAllProduct(result.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCoffee = async () => {
+    console.log("sasa");
+    //   setParam({...param,category:'Non Coffe'})
+    // getProduct()
+    try {
+      const body = { ...param, categories: "Coffee", sort: "" };
+      setParam(body);
+      const result = await getProduct(body);
+      setAllProduct(result.data.result.result.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchData(query);
-    console.log(query);
-    console.log(product);
-  }, [query]);
-
-  const currency = (price) => {
-    return (
-      "IDR " +
-      parseFloat(price)
-        .toFixed()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-    );
-  };
+    getAllProduct();
+  }, []);
 
   return (
     <>
@@ -82,67 +146,26 @@ function Product() {
         <main className={styles["right-content"]}>
           <div className={styles["head-content"]}>
             <ul>
-              <li
-                onClick={() => {
-                  setQuery({
-                    ...query,
-                    sort: "popular",
-                    categories: "",
-                    search: "",
-                  });
-                }}
-              >
-                Favorite Product
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    ...query,
-                    sort: "",
-                    categories: "Coffee",
-                    search: "",
-                  });
-                }}
-              >
-                Coffee
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    ...query,
-                    sort: "",
-                    categories: "Non Coffee",
-                    search: "",
-                  });
-                }}
-              >
-                Non Coffee
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    ...query,
-                    sort: "",
-                    categories: "Foods",
-                    search: "",
-                  });
-                }}
-              >
-                Foods
-              </li>
+              <li onClick={handleFavorite}>Favorite Product</li>
+              <li onClick={handleCoffee}>Coffee</li>
+              <li onClick={handleNonCofee}>Non Coffee</li>
+              <li onClick={handleFood}>Foods</li>
               <li>Add-on</li>
             </ul>
           </div>
           <div className={styles["content-detail"]}>
-            {product.map((e) => (
-              <Card
-                text={e.product_name}
-                price={currency(e.price)}
-                image={e.image}
-                id={e.id}
-                key={e.id}
-              />
-            ))}
+            {allProduct?.map((e, index) => {
+              console.log();
+              return (
+                <Card
+                  key={index}
+                  image={e.image}
+                  text={e.product_name}
+                  price={e.price}
+                  id={e.id}
+                />
+              );
+            })}
             {/* <div className={styles["content-bar"]}>
               <img src={hazelnutImage} alt="Hazelnut Latte" />
               <h2>Hazelnut Latte</h2>

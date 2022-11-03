@@ -5,11 +5,11 @@
 .card-bar {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     background-color: white;
     border-radius: 15px;
     padding: 1rem;
-    width: 100%;
-    max-width: 55vh;
+    width: 25rem;
     gap: 1rem;
     cursor: pointer;
 }

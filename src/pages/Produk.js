@@ -18,7 +18,7 @@ class Produk extends Component {
   }
   allProducts = () => {
     axios
-      .get(`http://localhost:8060/api/v1/products?limit=16&page=1`)
+      .get(`${process.env.REACT_APP_BACKEND_HOST}products?limit=16&page=1`)
       .then((res) => {
         console.log(res.data);
         const product = res.data.result;

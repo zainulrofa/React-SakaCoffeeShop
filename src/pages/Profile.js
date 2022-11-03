@@ -4,27 +4,86 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
-import largeProfile from "../assets/img/image 39-1.png";
 import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
-import { useState } from "react";
-import { getProfile } from "../helpers/fetch";
+import { useState, useEffect, useRef } from "react";
+import { editProfile, getProfile } from "../helpers/fetch";
 
 function Profile({ navigate }) {
-  const token = JSON.parse(localStorage.getItem("userInfo")).token;
+  const target = useRef(null);
   const [profile, setProfile] = useState({});
-  const requestProfile = async (token) => {
+  const [isEdit, setIsEdit] = useState(true);
+  const [imgPrev, setImgPrev] = useState();
+  const [body, setBody] = useState({});
+  console.log(body);
+
+  const handleAddress = (e) => {
+    setBody({ ...body, delivery_address: e.target.value });
+  };
+  const handleDisplayName = (e) => {
+    setBody({ ...body, display_name: e.target.value });
+  };
+  const handleFirstName = (e) => {
+    setBody({ ...body, first_name: e.target.value });
+  };
+  const handleLastName = (e) => {
+    setBody({ ...body, last_name: e.target.value });
+  };
+  const handleDOB = (e) => {
+    setBody({ ...body, date_of_birth: e.target.value });
+  };
+  const handleGender = (e) => {
+    setBody({ ...body, gender: e.target.value });
+  };
+  // const handleImage = (e) => {
+  //   console.log(e);
+  //   setBody({ ...body, image: e.target.files[0] });
+  //   setImgPrev(URL.createObjectURL(e.target.files[0]));
+  // };
+
+  const getDataProfile = async () => {
     try {
-      const res = await getProfile(token);
-      console.log(res);
-      setProfile(res.data.data[0]);
+      const result = await getProfile();
+      console.log(result.data.result[0]);
+      setProfile(result.data.result[0]);
+      console.log(result);
+    } catch (error) {
+      // console.log(error);
+      // console.log(error.response.data.statusCode);
+      if (error.response.data.statusCode === 403) {
+        navigate("/login");
+      }
+    }
+  };
+
+  const handleSaveChange = async () => {
+    const formData = new FormData();
+    Object.keys(body).forEach((key, idx) => {
+      formData.append(key, body[key]);
+    });
+    //   for (var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]);
+    // }
+    try {
+      await editProfile(formData);
+      setBody({});
+      setIsEdit(true);
+      await getDataProfile();
     } catch (error) {
       console.log(error);
     }
   };
-  useState(() => {
-    requestProfile(token);
-    console.log(profile);
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("userInfo");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDataProfile();
   }, []);
 
   return (
@@ -48,14 +107,14 @@ function Profile({ navigate }) {
                   <div className={styles["profile-img"]}>
                     <img
                       className={styles["profile-people"]}
-                      src={largeProfile}
+                      src={imgPrev ?? `http://localhost:8060/${profile.image}`}
                       alt="profile"
                     />
                     <div className={styles["edit-pencil"]}>
                       <img src={pencil} alt="edit" />
                     </div>
                   </div>
-                  <h2>{profile.display_name || "your name here"}</h2>
+                  <h2>{profile.display_name}</h2>
                   <p>{profile.email}</p>
                   <h3>Has been ordered 1 products</h3>
                 </div>
@@ -74,6 +133,7 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="emailaddress"
+                            disabled={isEdit}
                             value={profile.email}
                           />
                         </div>
@@ -82,6 +142,8 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="deliveryaddress"
+                            onChange={handleAddress}
+                            disabled={isEdit}
                             value={profile.address}
                           />
                         </div>
@@ -92,7 +154,8 @@ function Profile({ navigate }) {
                           <input
                             type="tel"
                             id="mobilenumber"
-                            value={profile.phone}
+                            disabled={isEdit}
+                            value={profile.mobile_phone}
                           />
                         </div>
                       </div>
@@ -154,6 +217,8 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="displayname"
+                            onChange={handleDisplayName}
+                            disabled={isEdit}
                             value={profile.display_name}
                           />
                         </div>
@@ -162,7 +227,9 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="firstname"
-                            value={profile.display_name}
+                            onChange={handleFirstName}
+                            disabled={isEdit}
+                            value={profile.first_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -170,26 +237,44 @@ function Profile({ navigate }) {
                           <input
                             type="text"
                             id="lastname"
-                            value={profile.first_name}
+                            onChange={handleLastName}
+                            disabled={isEdit}
+                            value={profile.last_name}
                           />
                         </div>
                       </div>
                       <div className={styles["right-profile"]}>
                         <div className={styles["input-div"]}>
-                          <label for="date">DD/MM/YY:</label>
+                          <label for="date">YYYY/MM/DD:</label>
                           <input
+                            onChange={handleDOB}
                             type="text"
-                            placeholder="DD/MM/YY"
+                            disabled={isEdit}
                             value={profile.birthday}
                           />
                         </div>
                         <div className={styles.gender}>
                           <div className={styles.male}>
-                            <input type="radio" name="choice" id="male" />
+                            <input
+                              type="radio"
+                              name="choice"
+                              id="male"
+                              value="male"
+                              onChange={handleGender}
+                              defaultChecked={
+                                profile.gender === "male" ? "true" : "false"
+                              }
+                            />
                             <label for="male">Male</label>
                           </div>
                           <div className={styles.female}>
-                            <input type="radio" name="choice" id="female" />
+                            <input
+                              type="radio"
+                              name="choice"
+                              id="female"
+                              value="female"
+                              onChange={handleGender}
+                            />
                             <label for="female">Famale</label>
                           </div>
                         </div>
@@ -203,9 +288,7 @@ function Profile({ navigate }) {
                   <p>Do you want to save the change?</p>
                   <div
                     className={styles["button-width"]}
-                    onClick={() => {
-                      navigate("/");
-                    }}
+                    onClick={handleSaveChange}
                   >
                     <Button text="Save Data" />
                   </div>
@@ -224,19 +307,9 @@ function Profile({ navigate }) {
                   </div>
                   <div
                     className={styles["button-width"]}
-                    onClick={() => {
-                      navigate("/signup");
-                    }}
+                    onClick={handleLogout}
                   >
-                    <Button
-                      text="Log out"
-                      variant="color-2"
-                      font="style-2"
-                      onClick={() => {
-                        localStorage.removeItem("userInfo");
-                        navigate("/login");
-                      }}
-                    />
+                    <Button text="Log out" variant="color-2" font="style-2" />
                   </div>
                 </div>
               </div>

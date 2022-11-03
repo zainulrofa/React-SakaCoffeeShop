@@ -44,6 +44,7 @@ a {
 
 .profile-photo .profile-img .profile-people {
     border-radius: 50%;
+    width: 6rem;
 }
 
 .profile-photo .profile-img .edit-pencil {
