@@ -9,11 +9,13 @@ import { getProfile } from "../helpers/fetch";
 import { useEffect } from "react";
 
 function NavbarSignup({ navigate }) {
-  const [title, setTitle] = useState("");
+  const [state, setState] = useState("");
+  const title = state.title;
   const [profile, setProfile] = useState({});
+  // console.log(element);
 
   function searchBar() {
-    setTitle((state) => ({
+    setState((state) => ({
       title: state.title === `${styles.show}` ? "" : `${styles.show}`,
     }));
   }
@@ -38,7 +40,7 @@ function NavbarSignup({ navigate }) {
   }, []);
 
   return (
-    <div className={styles["right-bar"]}>
+    <div className={`${styles["right-bar"]}`}>
       <div className={styles.searching}>
         <input className={title} type="text" placeholder="search product ..." />
         <div className={styles["search-img"]} onClick={searchBar}>

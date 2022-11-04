@@ -1,0 +1,40 @@
+.title {
+    padding: 2rem 0 1rem;
+}
+
+.title p {
+    color: #4F5665;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.title span {
+    color: #6A4029;
+    font-weight: 700;
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.left-content .photo-promo {
+    background-color: #dddddd;
+    padding: 2rem 2rem;
+    border-radius: 50%;
+    width: 15rem;
+    height: 15rem;
+}
+
+.left-content .photo-promo img {
+    position: relative;
+    top: 2.5rem;
+    left: 2.5rem;
+}
+
+.left-content .take-picture, .left-content .from-gallery {
+    width: 70%;
+}
+

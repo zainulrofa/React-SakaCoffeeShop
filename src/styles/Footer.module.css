@@ -107,15 +107,13 @@
     .footer-container {
         flex-direction: column-reverse;
     }
-}
 
-@media screen and (max-width: 768px) {
     .left-foot-content {
         margin: 2rem;
     }
 
     .right-foot-content {
-        gap: 4rem;
+        gap: 7rem;
+        justify-content: center;
     }
 }
-

@@ -10,6 +10,8 @@ import History from "../pages/History";
 import Payment from "../pages/Payment";
 import Product from "../pages/Product";
 import ProductDetails from "../pages/ProductDetails";
+import EditProduct from "../pages/EditProduct";
+import AddPromo from "../pages/AddPromo";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
   {
     path: "/product-detail/:id",
     element: <ProductDetails />,
+  },
+  {
+    path: "/edit-product",
+    element: <EditProduct />,
+  },
+  {
+    path: "/add-promo",
+    element: <AddPromo />,
   },
 ]);
 

@@ -1,16 +1,23 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/Header.module.css";
 import withNavigate from "../helpers/withNavigate";
-import HeaderLogin from "../components/HeaderLogin";
-import NavbarSignup from "../components/NavbarSignup";
+// import HeaderLogin from "../components/HeaderLogin";
+// import NavbarSignup from "../components/NavbarSignup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import sakaLogo from "../assets/img/sakacoffee.png";
+import searching from "../assets/img/Searching.png";
+import chat from "../assets/img/chat.png";
+import { getProfile } from "../helpers/fetch";
 
 function Header({ navigate }) {
   const [state, setState] = useState("");
   const text = state.text;
-  // const title = state.title;
+  const title = state.title;
+  const [profile, setProfile] = useState({});
+  // console.log(element);
+
   const token = JSON.parse(localStorage.getItem("userInfo"))
     ? JSON.parse(localStorage.getItem("userInfo")).token
     : "";
@@ -22,11 +29,30 @@ function Header({ navigate }) {
     }));
   }
 
-  // function searchBar() {
-  //   setState((state) => ({
-  //     title: state.title === `${styles.show}` ? "" : `${styles.show}`,
-  //   }));
-  // }
+  function searchBar() {
+    setState((state) => ({
+      title: state.title === `${styles.show}` ? "" : `${styles.show}`,
+    }));
+  }
+
+  const getDataProfile = async () => {
+    try {
+      const result = await getProfile();
+      // console.log(result.data.result[0]);
+      setProfile(result.data.result[0]);
+      console.log(result);
+    } catch (error) {
+      // console.log(error);
+      // console.log(error.response.data.statusCode);
+      if (error.response.data.statusCode === 403) {
+        navigate("/login");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getDataProfile();
+  }, []);
 
   return (
     <nav className={styles.navbar}>
@@ -48,6 +74,7 @@ function Header({ navigate }) {
           >
             Saka Coffee Shop
           </p>
+          <FontAwesomeIcon icon="fa-solid fa-eye" />
         </div>
         <ol className={text}>
           <li
@@ -64,7 +91,13 @@ function Header({ navigate }) {
           >
             Product
           </li>
-          <li>Yor Cart</li>
+          <li
+            onClick={() => {
+              navigate("/edit-product");
+            }}
+          >
+            Your Cart
+          </li>
           <li
             onClick={() => {
               navigate("/history");
@@ -74,7 +107,56 @@ function Header({ navigate }) {
           </li>
         </ol>
       </div>
-      {token ? <NavbarSignup /> : <HeaderLogin />}
+      {token ? (
+        <section className={text}>
+          <div className={styles.searching}>
+            <input
+              className={title}
+              type="text"
+              placeholder="search product ..."
+            />
+            <div className={styles["search-img"]} onClick={searchBar}>
+              <img src={searching} alt="searching" />
+            </div>
+          </div>
+          <div className={styles.chat}>
+            <div className={styles.notif}>1</div>
+            <img src={chat} alt="" />
+          </div>
+          <div
+            className={styles.profile}
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            <img src={`http://localhost:8060/${profile.image}`} alt="profile" />
+          </div>
+        </section>
+      ) : (
+        <section className={text}>
+          <div className={styles["right-bar"]}>
+            <div className={styles.input}>
+              <p
+                className={styles["btn-login"]}
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </p>
+              <button
+                className={styles["btn-sign"]}
+                type="submit"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                Sign up
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
       <div className={styles["menu-toggle"]} onClick={slide}>
         <input type="checkbox" />
         <span></span>

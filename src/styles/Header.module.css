@@ -201,6 +201,130 @@ transform-origin: 0 0;
     transform: scale(0);
 }
 
+.navbar section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar section .searching {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar section .searching input {
+    /* position: absolute;
+    top: -.5rem;
+    right: 0; */
+    /* display: none; */
+    outline: none;
+    border: none;
+    background-color: #EFEEEE;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    opacity: 0;
+    transition: .5s;
+}
+
+.navbar section .searching input.show {
+    opacity: 1;
+    transition: .5s;
+}
+
+.navbar section .searching span p {
+    color: #4F5665;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.navbar section .searching .search-bar input {
+    border: none;
+    outline: 0;
+    background-color: transparent;
+}
+
+.navbar section .searching img {
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.navbar section .chat {
+    position: relative;
+}
+
+.navbar section .chat img {
+    width: 1.5rem;
+}
+
+.navbar section .chat .notif {
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    display: flex;
+    background-color: #6A4029;
+    justify-content: center;
+    align-items: center;
+    font-size: .5rem;
+    font-weight: 700;
+    color: white;
+    border-radius: 50%;
+    left: 1rem;
+    top: -.5rem;
+}
+
+.navbar section .profile img {
+    border-radius: 50%;
+    cursor: pointer;
+    width: 2rem;
+}
+section .right-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+section .right-bar .input {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+section .right-bar .input .btn-login {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+}
+section .right-bar .input .btn-login:hover {
+    color: #FFBA33;
+}
+section .right-bar .input .btn-login:active {
+    position: relative;
+    top: .1rem;
+}
+section .right-bar .input .btn-sign {
+    border: none;
+    outline: none;
+    background: transparent;
+    background-color: #FFBA33;
+    padding: .5rem 1rem;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6A4029;
+}
+
+section .right-bar .input .btn-sign:hover {
+    transform: scale(1.1);
+    transition: .5s;
+}
+
+section .right-bar .input .btn-sign:active {
+    position: relative;
+    top: .1rem;
+}
+
 /* responsive */
 @media screen and (max-width: 768px) {
     .navbar {
@@ -225,8 +349,8 @@ transform-origin: 0 0;
     .navbar ol {
         position: absolute;
         right: 0;
-        top: 0;
-        width: 70%;
+        top: 5rem;
+        width: 80%;
         height: 100vh;
         justify-content: space-evenly;
         align-items: center;
@@ -243,8 +367,31 @@ transform-origin: 0 0;
         transform: translateY(0);
     }
 
-    .navbar .right-bar {
+    .navbar section {
         display: none;
+    }
+
+    .navbar section {
+        display: flex;
+        position: absolute;
+        top: 6rem;
+        right: 4rem;
+        background-color: white;
+        height: 4vh;
+        align-items: center;
+        transform: translateY(-1000%);
+        transition: 1s;
+        opacity: 0;
+    }
+
+    .navbar section.slide-bar {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .navbar section .searching input {
+
+        opacity: 1;
     }
 
     .menu-toggle {

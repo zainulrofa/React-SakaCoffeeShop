@@ -87,6 +87,20 @@
 
 @media screen and (max-width: 768px) {
     .right-bar {
-        display: none;
+        display: flex;
+        position: absolute;
+        top: 6rem;
+        right: 4rem;
+        background-color: white;
+        height: 4vh;
+        align-items: center;
+        transform: translateY(-1000%);
+        transition: 1s;
+        opacity: 0;
+    }
+
+    .right-bar.slide-bar {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

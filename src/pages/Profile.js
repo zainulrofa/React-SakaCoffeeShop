@@ -259,7 +259,8 @@ function Profile({ navigate }) {
                               type="radio"
                               name="choice"
                               id="male"
-                              value="male"
+                              value={profile.gender}
+                              disabled={isEdit}
                               onChange={handleGender}
                               defaultChecked={
                                 profile.gender === "male" ? "true" : "false"
@@ -272,7 +273,8 @@ function Profile({ navigate }) {
                               type="radio"
                               name="choice"
                               id="female"
-                              value="female"
+                              value={profile.gender}
+                              disabled={isEdit}
                               onChange={handleGender}
                             />
                             <label for="female">Famale</label>
