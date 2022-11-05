@@ -31,7 +31,7 @@ function CardProduct(props) {
         />
         <h2>{props.text}</h2>
         <h3>{currency(props.price)}</h3>
-        <div className={styles["edit-pencil"]}>
+        <div className={`${styles["edit-pencil"]} ${styles[props.display]}`}>
           <img src={pencil} alt="edit" />
         </div>
       </div>

@@ -52,6 +52,7 @@ export const getProfile = () => {
   const URL =
     // process.env.REACT_APP_BACKEND_HOST +
     "http://localhost:8060/api/v1/users/profile_user";
+  console.log(URL);
   return axios.get(URL, {
     headers: {
       "access-token": token,

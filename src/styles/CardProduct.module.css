@@ -50,6 +50,10 @@
     width: 1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .content-bar {
         width: 14rem;

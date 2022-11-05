@@ -8,39 +8,42 @@ import CardPromo from "../components/CardPromo";
 
 // import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
-// import { useMemo } from "react";
-import { getProduct } from "../helpers/fetch";
-// import { useLocation } from "react-router-dom";
+import { useMemo } from "react";
+import { getData, getProduct } from "../helpers/fetch";
+import { useLocation } from "react-router-dom";
 
-// const useQuery = () => {
-//   const { search } = useLocation();
+const useQuery = () => {
+  const { search } = useLocation();
 
-//   return useMemo(() => new URLSearchParams(search), [search]);
-// };
+  return useMemo(() => new URLSearchParams(search), [search]);
+};
 
 function Product() {
-  // const getQuery = useQuery();
-  // const [product, setProduct] = useState([]);
-  // const [query, setQuery] = useState({
-  //   search: getQuery.get("search") ? getQuery.get("search") : "",
-  //   categories: getQuery.get("categories") ? getQuery.get("categories") : "",
-  //   sort: getQuery.get("sort") ? getQuery.get("sort") : "",
-  // });
+  const getQuery = useQuery();
+  const [product, setProduct] = useState([]);
+  const [query, setQuery] = useState({
+    search: getQuery.get("search") ? getQuery.get("search") : "",
+    // categories: getQuery.get("categories") ? getQuery.get("categories") : "",
+    // sort: getQuery.get("sort") ? getQuery.get("sort") : "",
+  });
 
-  // const fetchData = async (query) => {
-  //   try {
-  //     const products = await getData(`/products`, query);
-  //     setProduct(products.data.result.result.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async (query) => {
+    try {
+      const products = await getData(`/products`, query);
+      setQuery({
+        ...query,
+      });
+      setProduct(products.data.result.result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchData(query);
-  //   console.log(query);
-  //   console.log(product);
-  // }, [query]);
+  useEffect(() => {
+    fetchData(query);
+    // console.log(query);
+    // console.log(product);
+  }, [query.search]);
 
   const [allProduct, setAllProduct] = useState([]);
   const [param, setParam] = useState({
@@ -58,8 +61,6 @@ function Product() {
     }
   };
   const handleNonCofee = async () => {
-    //   setParam({...param,category:'Non Coffe'})
-    // getProduct()
     try {
       const body = { ...param, categories: "Non Coffee", sort: "" };
       console.log(body);
@@ -86,9 +87,6 @@ function Product() {
     }
   };
   const handleFood = async () => {
-    console.log("sasa");
-    //   setParam({...param,category:'Non Coffe'})
-    // getProduct()
     try {
       const body = { ...param, categories: "Foods", sort: "" };
       setParam(body);
@@ -99,8 +97,6 @@ function Product() {
     }
   };
   const handleCoffee = async () => {
-    //   setParam({...param,category:'Non Coffe'})
-    // getProduct()
     try {
       const body = { ...param, categories: "Coffee", sort: "" };
       setParam(body);
@@ -163,6 +159,7 @@ function Product() {
                   text={e.product_name}
                   price={e.price}
                   id={e.id}
+                  display="hidden"
                 />
               );
             })}

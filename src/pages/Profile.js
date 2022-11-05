@@ -8,6 +8,7 @@ import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
 import { useState, useEffect, useRef } from "react";
 import { editProfile, getProfile } from "../helpers/fetch";
+import dayjs from "dayjs";
 
 function Profile({ navigate }) {
   const target = useRef(null);
@@ -30,23 +31,22 @@ function Profile({ navigate }) {
     setBody({ ...body, last_name: e.target.value });
   };
   const handleDOB = (e) => {
-    setBody({ ...body, date_of_birth: e.target.value });
+    setBody({ ...body, birhtday: e.target.value });
   };
   const handleGender = (e) => {
     setBody({ ...body, gender: e.target.value });
   };
-  // const handleImage = (e) => {
-  //   console.log(e);
-  //   setBody({ ...body, image: e.target.files[0] });
-  //   setImgPrev(URL.createObjectURL(e.target.files[0]));
-  // };
+  const handleImage = (e) => {
+    console.log(e);
+    setBody({ ...body, image: e.target.files[0] });
+    setImgPrev(URL.createObjectURL(e.target.files[0]));
+  };
 
   const getDataProfile = async () => {
     try {
       const result = await getProfile();
       console.log(result.data.result[0]);
       setProfile(result.data.result[0]);
-      console.log(result);
     } catch (error) {
       // console.log(error);
       // console.log(error.response.data.statusCode);
@@ -110,9 +110,21 @@ function Profile({ navigate }) {
                       src={imgPrev ?? `http://localhost:8060/${profile.image}`}
                       alt="profile"
                     />
-                    <div className={styles["edit-pencil"]}>
+                    <div
+                      className={styles["edit-pencil"]}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        target.current.click();
+                      }}
+                    >
                       <img src={pencil} alt="edit" />
                     </div>
+                    <input
+                      type="file"
+                      ref={target}
+                      onChange={(e) => handleImage(e)}
+                      style={{ display: "none" }}
+                    />
                   </div>
                   <h2>{profile.display_name}</h2>
                   <p>{profile.email}</p>
@@ -123,7 +135,13 @@ function Profile({ navigate }) {
                 <div className={styles.contact}>
                   <h2>Contacts</h2>
                   <div className={styles["contact-content"]}>
-                    <div className={styles["edit-pencil"]}>
+                    <div
+                      className={styles["edit-pencil"]}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsEdit(!isEdit);
+                      }}
+                    >
                       <img src={pencil} alt="edit" />
                     </div>
                     <div className={styles["input-contact"]}>
@@ -134,7 +152,7 @@ function Profile({ navigate }) {
                             type="text"
                             id="emailaddress"
                             disabled={isEdit}
-                            value={profile.email}
+                            placeholder={profile.email}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -144,7 +162,7 @@ function Profile({ navigate }) {
                             id="deliveryaddress"
                             onChange={handleAddress}
                             disabled={isEdit}
-                            value={profile.address}
+                            placeholder={profile.address}
                           />
                         </div>
                       </div>
@@ -155,7 +173,7 @@ function Profile({ navigate }) {
                             type="tel"
                             id="mobilenumber"
                             disabled={isEdit}
-                            value={profile.mobile_phone}
+                            placeholder={profile.mobile_phone}
                           />
                         </div>
                       </div>
@@ -219,7 +237,7 @@ function Profile({ navigate }) {
                             id="displayname"
                             onChange={handleDisplayName}
                             disabled={isEdit}
-                            value={profile.display_name}
+                            placeholder={profile.display_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -229,7 +247,7 @@ function Profile({ navigate }) {
                             id="firstname"
                             onChange={handleFirstName}
                             disabled={isEdit}
-                            value={profile.first_name}
+                            placeholder={profile.first_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -239,18 +257,20 @@ function Profile({ navigate }) {
                             id="lastname"
                             onChange={handleLastName}
                             disabled={isEdit}
-                            value={profile.last_name}
+                            placeholder={profile.last_name}
                           />
                         </div>
                       </div>
                       <div className={styles["right-profile"]}>
                         <div className={styles["input-div"]}>
-                          <label for="date">YYYY/MM/DD:</label>
+                          <label for="date">DD/MM/YY:</label>
                           <input
                             onChange={handleDOB}
-                            type="text"
+                            type="date"
                             disabled={isEdit}
-                            value={profile.birthday}
+                            placeholder={dayjs(profile.birhtday).format(
+                              "DD/MM/YY"
+                            )}
                           />
                         </div>
                         <div className={styles.gender}>
