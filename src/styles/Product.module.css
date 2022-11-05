@@ -110,10 +110,10 @@ a {
 .main-container .right-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: flex-start; */
     justify-content: flex-start;
     width: 100%;
-    gap: 6rem;
+    gap: 1rem;
     padding: 2rem;
     border-left: 0.5px solid #9F9F9F;
 }
@@ -144,7 +144,96 @@ a {
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 8rem 2rem;
-    padding: 0 3rem;
+    padding: 6rem 3rem;
+}
+
+.right-content .dropdown {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 20%;
+}
+
+.right-content .dropdown-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: .5rem 1rem;
+    background-color: white;
+    box-shadow: 3px 3px 10px 6px rgb(0, 0, 0, 0.06);
+    cursor: pointer;
+    user-select: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.right-content .dropdown-btn h2 {
+    color: #9F9F9F;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.right-content .dropdown-btn span {
+    color: #9F9F9F;
+    font-size: 1rem;
+}
+
+.right-content .dropdown-btn:hover {
+    transform: scale(1.1);
+    transition: all .5s;
+}
+
+.right-content .dropdown-content {
+    position: absolute;
+    top: 3rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 3px 3px 10px 6px rgb(0, 0, 0, 0.06);
+    z-index: 1000;
+}
+
+.right-content .dropdown-content .dropdown-item {
+    padding: 1rem 0;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.right-content .dropdown-content .dropdown-item:hover {
+    background-color: #FFCB65;
+}
+
+.right-content .dropdown-content .dropdown-item p{
+    margin: 0;
+}
+
+.right-content .paginate-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.right-content .paginate-container .title-paginate p {
+    margin: 0;
+}
+
+.right-content .paginate-container .btn-paginate {
+    display: flex;
+    gap: 1rem;
+}
+
+.right-content .paginate-container .btn-paginate .btn-prev, .right-content .paginate-container .btn-paginate .btn-next {
+    background-color: #FFCB65;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #6A4029;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* hamburger */
@@ -195,7 +284,8 @@ a {
     }
 
     .main-container .right-content ul {
-        padding: 2rem 0;
+        padding: 1rem 0;
+        margin: 0;
         gap: 2rem;
     }
 
@@ -211,6 +301,16 @@ a {
 
     .right-content .content-detail {
     justify-content: center;
+    padding-top: 6rem;
+    }
+
+    .right-content .dropdown-btn {
+        z-index: 10001;
+    }
+
+    .right-content .dropdown-content {
+        position: absolute;
+        top: 3.5rem;
     }
 }
 

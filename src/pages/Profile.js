@@ -8,7 +8,6 @@ import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
 import { useState, useEffect, useRef } from "react";
 import { editProfile, getProfile } from "../helpers/fetch";
-import dayjs from "dayjs";
 
 function Profile({ navigate }) {
   const target = useRef(null);
@@ -18,6 +17,9 @@ function Profile({ navigate }) {
   const [body, setBody] = useState({});
   console.log(body);
 
+  // const changeHandler = (e) => [
+  //   setBody({ ...body, [e.target.name]: e.target.value }),
+  // ];
   const handleAddress = (e) => {
     setBody({ ...body, delivery_address: e.target.value });
   };
@@ -80,6 +82,14 @@ function Profile({ navigate }) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const changeHandler = (e) => [
+    setBody({ ...body, [e.target.name]: e.target.value }),
+  ];
+
+  const getBirthday = () => {
+    return new Date(profile.birthday).toLocaleDateString();
   };
 
   useEffect(() => {
@@ -263,39 +273,47 @@ function Profile({ navigate }) {
                       </div>
                       <div className={styles["right-profile"]}>
                         <div className={styles["input-div"]}>
-                          <label for="date">DD/MM/YY:</label>
+                          <label for="date">Birthday:</label>
                           <input
                             onChange={handleDOB}
-                            type="date"
                             disabled={isEdit}
-                            placeholder={dayjs(profile.birhtday).format(
-                              "DD/MM/YY"
-                            )}
+                            name="birthday"
+                            type={isEdit ? "text" : "date"}
+                            placeholder={getBirthday()}
                           />
                         </div>
                         <div className={styles.gender}>
                           <div className={styles.male}>
                             <input
                               type="radio"
-                              name="choice"
+                              name="gender"
                               id="male"
                               value={profile.gender}
                               disabled={isEdit}
-                              onChange={handleGender}
+                              // onChange={changeHandler}
                               defaultChecked={
                                 profile.gender === "male" ? "true" : "false"
                               }
+                              onClick={(e) => {
+                                setBody({ ...body, gender: e.target.value });
+                              }}
                             />
                             <label for="male">Male</label>
                           </div>
                           <div className={styles.female}>
                             <input
                               type="radio"
-                              name="choice"
+                              name="gender"
                               id="female"
                               value={profile.gender}
                               disabled={isEdit}
-                              onChange={handleGender}
+                              // onChange={changeHandler}
+                              defaultChecked={
+                                profile.gender === "female" ? true : false
+                              }
+                              onClick={(e) => {
+                                setBody({ ...body, gender: e.target.value });
+                              }}
                             />
                             <label for="female">Famale</label>
                           </div>
@@ -314,7 +332,16 @@ function Profile({ navigate }) {
                   >
                     <Button text="Save Data" />
                   </div>
-                  <Button text="Cancel" variant="color-1" font="style-1" />
+                  <div
+                    className={styles["button-width"]}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEdit(isEdit);
+                    }}
+                  >
+                    <Button text="Cancel" variant="color-1" font="style-1" />
+                  </div>
+
                   <div
                     className={styles["button-width"]}
                     onClick={() => {

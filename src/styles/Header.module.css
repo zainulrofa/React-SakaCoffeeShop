@@ -209,6 +209,7 @@ transform-origin: 0 0;
 
 .navbar section .searching {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 1rem;
 }

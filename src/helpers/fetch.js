@@ -2,11 +2,12 @@ import axios from "axios";
 
 // const baseUrl = "http://localhost:8060/api/v1";
 
-const axiosRequest = (method, url, data) => {
+const axiosRequest = (method, url, data, params) => {
   return axios({
     method,
-    url: `${"http://localhost:8060/api/v1/"}${url}`,
+    url: `${"http://localhost:8060/api/v1"}${url}`,
     data,
+    params,
   });
 };
 
@@ -15,7 +16,7 @@ export const getData = (url, params, data) => {
 };
 
 export const login = (data) => {
-  return axiosRequest("POST", "auths/login", data);
+  return axiosRequest("POST", "/auths/login", data);
 };
 
 export const signup = (body) => {
@@ -37,7 +38,7 @@ export const getProductById = (id) => {
   const login = JSON.parse(localStorage.getItem("userInfo"));
   const token = login.token;
   // console.log(token);
-  const URL = process.env.REACT_APP_BACKEND_HOST + `api/v1/products/${id}`;
+  const URL = `http://localhost:8060/api/v1/products/${id}`;
   return axios.get(URL, {
     headers: {
       "access-token": token,
@@ -66,6 +67,9 @@ export const editProfile = (body) => {
   const URL =
     // process.env.REACT_APP_BACKEND_HOST +
     "http://localhost:8060/api/v1/users/profile";
+  for (const pair of body.entries()) {
+    console.log(pair);
+  }
   return axios.patch(URL, body, {
     headers: {
       "access-token": token,

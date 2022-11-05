@@ -16,6 +16,7 @@ function Header({ navigate }) {
   const text = state.text;
   const title = state.title;
   const [profile, setProfile] = useState({});
+  const [search, setSearch] = useState(() => "");
   // console.log(element);
 
   const token = JSON.parse(localStorage.getItem("userInfo"))
@@ -34,6 +35,14 @@ function Header({ navigate }) {
       title: state.title === `${styles.show}` ? "" : `${styles.show}`,
     }));
   }
+
+  const setValue = (event) => {
+    console.log(event);
+    setSearch(event.target.value);
+  };
+  const getSearch = () => {
+    return navigate(`/product?search=${search}`);
+  };
 
   const getDataProfile = async () => {
     try {
@@ -109,16 +118,17 @@ function Header({ navigate }) {
       </div>
       {token ? (
         <section className={text}>
-          <div className={styles.searching}>
+          <form className={styles.searching} onSubmit={getSearch}>
             <input
               className={title}
               type="text"
-              placeholder="search product ..."
+              placeholder="search here ..."
+              onChange={setValue}
             />
             <div className={styles["search-img"]} onClick={searchBar}>
               <img src={searching} alt="searching" />
             </div>
-          </div>
+          </form>
           <div className={styles.chat}>
             <div className={styles.notif}>1</div>
             <img src={chat} alt="" />

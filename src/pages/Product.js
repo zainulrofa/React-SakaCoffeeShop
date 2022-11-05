@@ -10,7 +10,8 @@ import CardPromo from "../components/CardPromo";
 import { useState, useEffect } from "react";
 import { useMemo } from "react";
 import { getData, getProduct } from "../helpers/fetch";
-import { useLocation } from "react-router-dom";
+import withSearchParams from "../helpers/withSearchParams";
+import { createSearchParams, useLocation } from "react-router-dom";
 
 const useQuery = () => {
   const { search } = useLocation();
@@ -18,98 +19,112 @@ const useQuery = () => {
   return useMemo(() => new URLSearchParams(search), [search]);
 };
 
-function Product() {
+const Product = ({ setSearchParams }) => {
+  const [isActive, setIsActive] = useState(false);
   const getQuery = useQuery();
   const [product, setProduct] = useState([]);
+  const [totalPage, setTotalPage] = useState(null);
   const [query, setQuery] = useState({
     search: getQuery.get("search") ? getQuery.get("search") : "",
     // categories: getQuery.get("categories") ? getQuery.get("categories") : "",
-    // sort: getQuery.get("sort") ? getQuery.get("sort") : "",
+    // minPrice: getQuery.get("minPrice") ? getQuery.get("minPrice") : 0,
+    // maxPrice: getQuery.get("maxPrice") ? getQuery.get("maxPrice") : 1000000,
+    // sort: getQuery.get("sort") ? getQuery.get("sort") : "popular",
+    page: getQuery.get("page") ? getQuery.get("page") : 1,
   });
 
   const fetchData = async (query) => {
     try {
       const products = await getData(`/products`, query);
+      // setNext(products.data.meta.next);
+      // setPrev(products.data.meta.prev);
       setQuery({
         ...query,
       });
+      // console.log(products.data.result.result.data);
       setProduct(products.data.result.result.data);
+      // console.log(products.data.result.result.meta);
+      setTotalPage(products.data.result.result.meta.totalPage);
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(totalPage);
   useEffect(() => {
+    const urlSearchParams = createSearchParams({ ...query });
+    setSearchParams(urlSearchParams);
     fetchData(query);
-    // console.log(query);
-    // console.log(product);
-  }, [query.search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query.search, query.categories, query.page]);
 
-  const [allProduct, setAllProduct] = useState([]);
-  const [param, setParam] = useState({
-    categories: "",
-    sort: "",
-  });
+  // const [allProduct, setAllProduct] = useState([]);
+  // const [param, setParam] = useState({
+  //   categories: "",
+  //   sort: "",
+  // });
 
-  const getAllProduct = async () => {
-    try {
-      const result = await getProduct(param);
-      console.log(result);
-      setAllProduct(result.data.result.result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleNonCofee = async () => {
-    try {
-      const body = { ...param, categories: "Non Coffee", sort: "" };
-      console.log(body);
-      setParam(body);
-      const result = await getProduct(body);
-      console.log(result.data.result.result.data);
-      setAllProduct(result.data.result.result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleFavorite = async () => {
-    try {
-      const body = {
-        ...param,
-        sort: "popular",
-        categories: "",
-      };
-      setParam(body);
-      const result = await getProduct(body);
-      setAllProduct(result.data.result.result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleFood = async () => {
-    try {
-      const body = { ...param, categories: "Foods", sort: "" };
-      setParam(body);
-      const result = await getProduct(body);
-      setAllProduct(result.data.result.result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleCoffee = async () => {
-    try {
-      const body = { ...param, categories: "Coffee", sort: "" };
-      setParam(body);
-      const result = await getProduct(body);
-      setAllProduct(result.data.result.result.data);
-    } catch (error) {
-      console.log(error);
-    }
+  // const getAllProduct = async () => {
+  //   try {
+  //     const result = await getProduct(param);
+  //     console.log(result);
+  //     setAllProduct(result.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleNonCofee = async () => {
+  //   try {
+  //     const body = { ...param, categories: "Non Coffee", sort: "" };
+  //     console.log(body);
+  //     setParam(body);
+  //     const result = await getProduct(body);
+  //     console.log(result.data.result.result.data);
+  //     setAllProduct(result.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleFavorite = async () => {
+  //   try {
+  //     const body = {
+  //       ...param,
+  //       sort: "popular",
+  //       categories: "",
+  //     };
+  //     setParam(body);
+  //     const result = await getProduct(body);
+  //     setAllProduct(result.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleFood = async () => {
+  //   try {
+  //     const body = { ...param, categories: "Foods", sort: "" };
+  //     setParam(body);
+  //     const result = await getProduct(body);
+  //     setAllProduct(result.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // const handleCoffee = async () => {
+  //   try {
+  //     const body = { ...param, categories: "Coffee", sort: "" };
+  //     setParam(body);
+  //     const result = await getProduct(body);
+  //     setAllProduct(result.data.result.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleDropdown = (e) => {
+    setIsActive(!isActive);
   };
 
-  useEffect(() => {
-    getAllProduct();
-  }, []);
+  // useEffect(() => {
+  //   getAllProduct();
+  // }, []);
 
   return (
     <>
@@ -142,15 +157,122 @@ function Product() {
         <main className={styles["right-content"]}>
           <div className={styles["head-content"]}>
             <ul>
-              <li onClick={handleFavorite}>Favorite Product</li>
-              <li onClick={handleCoffee}>Coffee</li>
-              <li onClick={handleNonCofee}>Non Coffee</li>
-              <li onClick={handleFood}>Foods</li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    sort: "popular",
+                    page: 1,
+                  });
+                }}
+              >
+                Favorite Product
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    categories: "Coffee",
+                    page: 1,
+                  });
+                  const urlSearchParams = createSearchParams({ ...query });
+                  setSearchParams(urlSearchParams);
+                }}
+              >
+                Coffee
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    categories: "Non Coffee",
+                    page: 1,
+                  });
+                  const urlSearchParams = createSearchParams({ ...query });
+                  setSearchParams(urlSearchParams);
+                }}
+              >
+                Non Coffee
+              </li>
+              <li
+                onClick={() => {
+                  setQuery({
+                    categories: "Foods",
+                    page: 1,
+                  });
+                }}
+              >
+                Foods
+              </li>
               <li>Add-on</li>
             </ul>
           </div>
+
+          <div className={styles.dropdown}>
+            <div className={styles["dropdown-btn"]} onClick={handleDropdown}>
+              <h2>Sort by</h2>
+              <span>&#9660;</span>
+            </div>
+            {isActive && (
+              <div className={styles["dropdown-content"]}>
+                <div className={styles["dropdown-item"]}>
+                  <p
+                    onClick={() => {
+                      setQuery({
+                        sort: "newest",
+                        page: 1,
+                      });
+                      const urlSearchParams = createSearchParams({ ...query });
+                      setSearchParams(urlSearchParams);
+                    }}
+                  >
+                    newest
+                  </p>
+                </div>
+                <div className={styles["dropdown-item"]}>
+                  <p
+                    onClick={() => {
+                      setQuery({
+                        sort: "oldest",
+                        page: 1,
+                      });
+                      const urlSearchParams = createSearchParams({ ...query });
+                      setSearchParams(urlSearchParams);
+                    }}
+                  >
+                    oldest
+                  </p>
+                </div>
+                <div className={styles["dropdown-item"]}>
+                  <p
+                    onClick={() => {
+                      setQuery({
+                        sort: "priciest",
+                        page: 1,
+                      });
+                      const urlSearchParams = createSearchParams({ ...query });
+                      setSearchParams(urlSearchParams);
+                    }}
+                  >
+                    priciest
+                  </p>
+                </div>
+                <div className={styles["dropdown-item"]}>
+                  <p
+                    onClick={() => {
+                      setQuery({
+                        sort: "cheapest",
+                        page: 1,
+                      });
+                      const urlSearchParams = createSearchParams({ ...query });
+                      setSearchParams(urlSearchParams);
+                    }}
+                  >
+                    cheapest
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
           <div className={styles["content-detail"]}>
-            {allProduct?.map((e, index) => {
+            {/* {allProduct?.map((e, index) => {
               console.log();
               return (
                 <Card
@@ -162,68 +284,48 @@ function Product() {
                   display="hidden"
                 />
               );
-            })}
-            {/* <div className={styles["content-bar"]}>
-              <img src={hazelnutImage} alt="Hazelnut Latte" />
-              <h2>Hazelnut Latte</h2>
-              <h3>IDR 25.000</h3>
+            })} */}
+            {product?.map((e) => (
+              <Card
+                text={e.product_name}
+                price={e.price}
+                image={e.image}
+                id={e.id}
+                key={e.id}
+                display="hidden"
+              />
+            ))}
+          </div>
+          <div className={`${styles["paginate-container"]}`}>
+            <div className={styles["title-paginate"]}>
+              <p>{`showing page ${query.page} of ${totalPage}`}</p>
             </div>
-            <div className={styles["content-bar"]}>
-              <img src={summerFriedImage} alt="Summer fried rice" />
-              <h2>Summer fried rice</h2>
-              <h3>IDR 32.000</h3>
+            <div className={styles["btn-paginate"]}>
+              <button
+                onClick={() => {
+                  setQuery({ ...query, page: query.page - 1 });
+                }}
+                disabled={query.page === 1 ? true : false}
+                className={`${styles["btn-prev"]}`}
+              >
+                prev
+              </button>
+              <button
+                onClick={() => {
+                  setQuery({ ...query, page: query.page + 1 });
+                }}
+                disabled={query.page === totalPage ? true : false}
+                className={`${styles["btn-next"]}`}
+              >
+                next
+              </button>
             </div>
-            <div className={styles["content-bar"]}>
-              <img src={creamyImage} alt="" />
-              <h2>Creamy Ice Latte</h2>
-              <h3>IDR 27.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={veggieImage} alt="Veggie tomato mix" />
-              <h2>Veggie tomato mix</h2>
-              <h3>IDR 34.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={hazelnutImage} alt="" />
-              <h2>Hazelnut Latte</h2>
-              <h3>IDR 25.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={summerFriedImage} alt="" />
-              <h2>Summer fried rice</h2>
-              <h3>IDR 32.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={creamyImage} alt="" />
-              <h2>Creamy Ice Latte</h2>
-              <h3>IDR 27.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={veggieImage} alt="Veggie tomato mix" />
-              <h2>Veggie tomato mix</h2>
-              <h3>IDR 34.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={hazelnutImage} alt="" />
-              <h2>Hazelnut Latte</h2>
-              <h3>IDR 25.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={summerFriedImage} alt="" />
-              <h2>Summer fried rice</h2>
-              <h3>IDR 32.000</h3>
-            </div>
-            <div className={styles["content-bar"]}>
-              <img src={creamyImage} alt="" />
-              <h2>Creamy Ice Latte</h2>
-              <h3>IDR 27.000</h3>
-            </div> */}
           </div>
         </main>
       </section>
       <Footer />
     </>
   );
-}
+};
 
-export default Product;
+export default withSearchParams(Product);
