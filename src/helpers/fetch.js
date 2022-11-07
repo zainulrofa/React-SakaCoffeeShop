@@ -46,6 +46,29 @@ export const getProductById = (id) => {
   });
 };
 
+export const getPromoProduct = (id) => {
+  const url = `http://localhost:8060/api/v1/products/${id}`;
+  return axios.get(url);
+};
+
+export const createProduct = (data, token) => {
+  const url = `http://localhost:8060/api/v1/products`;
+  return axios.post(url, data, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
+export const editProduct = (data, token, id) => {
+  const url = `http://localhost:8060/api/v1/products/${id}`;
+  return axios.patch(url, data, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
 export const getProfile = () => {
   const login = JSON.parse(localStorage.getItem("userInfo"));
   const token = login.token;

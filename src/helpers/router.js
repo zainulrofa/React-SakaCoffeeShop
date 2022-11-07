@@ -12,6 +12,7 @@ import Product from "../pages/Product";
 import ProductDetails from "../pages/ProductDetails";
 import EditProduct from "../pages/EditProduct";
 import AddPromo from "../pages/AddPromo";
+import AddProduct from "../pages/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/add-promo",
     element: <AddPromo />,
+  },
+  {
+    path: "/add-product",
+    element: <AddProduct />,
   },
 ]);
 

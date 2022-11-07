@@ -15,6 +15,7 @@
 .content-bar .product-image {
     position: absolute;
     width: 9.5rem;
+    height: 9.5rem;
     border-radius: 50%;
     top: -5.5rem;
     box-shadow: rgb(57 57 57 / 10%) 0px 30px 60px;

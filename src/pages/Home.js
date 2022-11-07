@@ -27,8 +27,19 @@ import Facebook from "../assets/img/Facebook.png";
 import Twitter from "../assets/img/Twitter.png";
 import Instagram from "../assets/img/Vector.png";
 import withNavigate from "../helpers/withNavigate";
+import { useState } from "react";
 
 function Home({ navigate }) {
+  const [search, setSearch] = useState(() => "");
+
+  const setValue = (event) => {
+    console.log(event);
+    setSearch(event.target.value);
+  };
+  const getSearch = () => {
+    return navigate(`/product?search=${search}`);
+  };
+
   return (
     <Fragment>
       <Header />
@@ -38,10 +49,10 @@ function Home({ navigate }) {
             <div className={`${styles.search} row`}>
               <div className="col-lg-6"></div>
               <div className=" d-flex col-md-12 justify-content-end">
-                <div className={styles["search-bar"]}>
+                <form className={styles["search-bar"]} onSubmit={getSearch}>
                   <img src={searching} alt="#" />
-                  <input type="text" placeholder="Search" />
-                </div>
+                  <input type="text" placeholder="Search" onChange={setValue} />
+                </form>
               </div>
             </div>
           </div>

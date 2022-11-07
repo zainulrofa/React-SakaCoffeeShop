@@ -174,7 +174,12 @@ function EditProduct({ navigate }) {
               );
             })}
           </div>
-          <div className={styles["add-product"]}>
+          <div
+            className={styles["add-product"]}
+            onClick={() => {
+              navigate("/add-product");
+            }}
+          >
             <Button text="Add Product" />
           </div>
         </main>
