@@ -9,18 +9,20 @@ import CardPromo from "../components/CardPromo";
 // import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
 import { useMemo } from "react";
-import { getData, getProduct } from "../helpers/fetch";
+import { getData } from "../helpers/fetch";
 import withSearchParams from "../helpers/withSearchParams";
 import { createSearchParams, Navigate, useLocation } from "react-router-dom";
 import withNavigate from "../helpers/withNavigate";
+import { connect, useDispatch, useSelector } from "react-redux";
+import action from "../redux/actions/product";
 
-const userinfo = JSON.parse(localStorage.getItem("userInfo"));
-let admin = null;
+// const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+// let admin = null;
 
-if (userinfo && userinfo.payload.role === "Admin")
-  admin = userinfo.payload.role;
-console.log(admin);
-console.log(userinfo.payload);
+// if (userinfo && userinfo.payload.role === "Admin")
+//   admin = userinfo.payload.role;
+// console.log(admin);
+// console.log(userinfo.payload);
 
 const useQuery = () => {
   const { search } = useLocation();
@@ -30,41 +32,47 @@ const useQuery = () => {
 
 const Product = ({ setSearchParams, navigate }) => {
   const [isActive, setIsActive] = useState(false);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.data);
+  const totalPage = useSelector((state) => state.products.meta);
   const getQuery = useQuery();
-  const [product, setProduct] = useState([]);
-  const [totalPage, setTotalPage] = useState(null);
+  // const [product, setProduct] = useState([]);
+  // const [totalPage, setTotalPage] = useState(null);
   const [query, setQuery] = useState({
     search: getQuery.get("search") ? getQuery.get("search") : "",
     // categories: getQuery.get("categories") ? getQuery.get("categories") : "",
     // minPrice: getQuery.get("minPrice") ? getQuery.get("minPrice") : 0,
     // maxPrice: getQuery.get("maxPrice") ? getQuery.get("maxPrice") : 1000000,
-    // sort: getQuery.get("sort") ? getQuery.get("sort") : "popular",
+    sort: getQuery.get("sort") ? getQuery.get("sort") : "popular",
     page: getQuery.get("page") ? getQuery.get("page") : 1,
   });
 
-  const fetchData = async (query) => {
-    try {
-      const products = await getData(`/products`, query);
-      // setNext(products.data.meta.next);
-      // setPrev(products.data.meta.prev);
-      setQuery({
-        ...query,
-      });
-      // console.log(products.data.result.result.data);
-      setProduct(products.data.result.result.data);
-      // console.log(products.data.result.result.meta);
-      setTotalPage(products.data.result.result.meta.totalPage);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  console.log(products);
+  // const fetchData = async (query) => {
+  //   try {
+  //     const products = await getData(`/products`, query);
+  //     // setNext(products.data.meta.next);
+  //     // setPrev(products.data.meta.prev);
+  //     setQuery({
+  //       ...query,
+  //     });
+  //     // console.log(products.data.result.result.data);
+  //     setProduct(products.data.result.result.data);
+  //     // console.log(products.data.result.result.meta);
+  //     setTotalPage(products.data.result.result.meta.totalPage);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   console.log(totalPage);
   useEffect(() => {
+    // fetchData(query);
+    dispatch(action.getProductsAction(query));
     const urlSearchParams = createSearchParams({ ...query });
     setSearchParams(urlSearchParams);
-    fetchData(query);
+    // setTotalPage(products.meta.totalPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.search, query.categories, query.page]);
+  }, [query]);
 
   // const [allProduct, setAllProduct] = useState([]);
   // const [param, setParam] = useState({
@@ -131,8 +139,9 @@ const Product = ({ setSearchParams, navigate }) => {
     setIsActive(!isActive);
   };
 
+  const role = JSON.parse(localStorage.getItem("userInfo")).payload.role || "";
   // useEffect(() => {
-  //   const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+  console.log(role);
   //   let admin = null;
 
   //   if (userinfo && userinfo.payload.role === "Admin")
@@ -172,7 +181,7 @@ const Product = ({ setSearchParams, navigate }) => {
             <li>3. Buy 1 get 1 only for new user</li>
             <li>4. Should make member card to apply coupon</li>
           </ol>
-          {admin && (
+          {role === "Admin" && (
             <div
               className={styles["add-promo"]}
               onClick={() => {
@@ -246,10 +255,8 @@ const Product = ({ setSearchParams, navigate }) => {
                     onClick={() => {
                       setQuery({
                         sort: "newest",
-                        page: 1,
+                        ...query,
                       });
-                      const urlSearchParams = createSearchParams({ ...query });
-                      setSearchParams(urlSearchParams);
                     }}
                   >
                     newest
@@ -314,7 +321,7 @@ const Product = ({ setSearchParams, navigate }) => {
                 />
               );
             })} */}
-            {product?.map((e) => (
+            {products.map((e) => (
               <Card
                 text={e.product_name}
                 price={e.price}
@@ -326,7 +333,7 @@ const Product = ({ setSearchParams, navigate }) => {
           </div>
           <div className={`${styles["paginate-container"]}`}>
             <div className={styles["title-paginate"]}>
-              <p>{`showing page ${query.page} of ${totalPage}`}</p>
+              <p>{`showing page ${query.page} of ${totalPage.totalPage}`}</p>
             </div>
             <div className={styles["btn-paginate"]}>
               <button
@@ -349,7 +356,7 @@ const Product = ({ setSearchParams, navigate }) => {
               </button>
             </div>
           </div>
-          {admin && (
+          {role === "Admin" && (
             <div
               className={styles["add-product"]}
               onClick={() => {
@@ -365,5 +372,7 @@ const Product = ({ setSearchParams, navigate }) => {
     </>
   );
 };
+
+const mapStateToProps = (reduxState) => reduxState;
 
 export default withNavigate(withSearchParams(Product));

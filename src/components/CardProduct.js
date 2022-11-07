@@ -7,13 +7,14 @@ import pencil from "../assets/img/pencil.png";
 // import veggieImage from "../assets/img/image1.png";
 
 function CardProduct(props) {
-  const userinfo = JSON.parse(localStorage.getItem("userInfo"));
-  let admin = null;
+  // const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+  // let admin = null;
 
-  if (userinfo && userinfo.payload.role === "Admin")
-    admin = userinfo.payload.role;
-  console.log(admin);
-  console.log(userinfo.payload);
+  // if (userinfo && userinfo.payload.role === "Admin")
+  //   admin = userinfo.payload.role;
+  // console.log(admin);
+  // console.log(userinfo.payload);
+  const role = JSON.parse(localStorage.getItem("userInfo")).payload.role || "";
 
   const currency = (price) => {
     return (
@@ -37,13 +38,13 @@ function CardProduct(props) {
         />
         <h2>{props.text}</h2>
         <h3>{currency(props.price)}</h3>
-        {admin && (
+        {role === "Admin" && (
           <div className={`${styles["edit-pencil"]}`}>
             <img
               src={pencil}
               alt="edit"
               onClick={() => {
-                props.navigate("/product/edit-product");
+                props.navigate(`/product/edit-product/${props.id}`);
               }}
             />
           </div>

@@ -4,7 +4,6 @@ import styles from "../styles/Header.module.css";
 import withNavigate from "../helpers/withNavigate";
 // import HeaderLogin from "../components/HeaderLogin";
 // import NavbarSignup from "../components/NavbarSignup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import sakaLogo from "../assets/img/sakacoffee.png";
 import searching from "../assets/img/Searching.png";
@@ -83,7 +82,6 @@ function Header({ navigate }) {
           >
             Saka Coffee Shop
           </p>
-          <FontAwesomeIcon icon="fa-solid fa-eye" />
         </div>
         <ol className={text}>
           <li
@@ -102,7 +100,7 @@ function Header({ navigate }) {
           </li>
           <li
             onClick={() => {
-              navigate("/edit-product");
+              navigate("/payment");
             }}
           >
             Your Cart

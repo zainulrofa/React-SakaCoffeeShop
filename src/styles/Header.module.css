@@ -390,9 +390,16 @@ section .right-bar .input .btn-sign:active {
         opacity: 1;
     }
 
-    .navbar section .searching input {
+    .navbar section .searching {
+        gap: 0;
+    }
 
+    .navbar section .searching input {
         opacity: 1;
+    }
+
+    .navbar section .searching img {
+        display: none;
     }
 
     .menu-toggle {
@@ -401,5 +408,7 @@ section .right-bar .input .btn-sign:active {
 }
 
 @media screen and (max-width: 568px) {
-    
+    .navbar section .chat .notif img {
+        display: none;
+    }
 }

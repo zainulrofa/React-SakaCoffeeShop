@@ -54,10 +54,15 @@ form .input-box {
     gap: 1rem;
 }
 
+.box-dropdown p {
+    margin: 0;
+}
+
 form .input-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #6A4029;
+    margin: 0;
 }
 
 .left-content form input {
@@ -126,6 +131,10 @@ form .input-title {
     background-color: #FFBA33;
 }
 
+.choose-img input {
+    display: none;
+}
+
 .choose-img:active {
     background-color: #f5ab18;
 }
@@ -155,6 +164,7 @@ form .input-title {
 .cancel-btn {
     color: #4F5665;
     background-color: #BABABA59;
+    margin: 0;
 }
 
 .cancel-btn:active {
@@ -296,11 +306,12 @@ form .input-title {
 .list-dropdown p {
     cursor: pointer;
     margin-bottom: 15px;
-    border-bottom: 1px solid #9F9F9F;
+    /* border-bottom: 1px solid #9F9F9F; */
 }
 
 .list-dropdown p:hover {
-    color: #f5ab18;
+    background-color: #f5ab18;
+    transition: .5s;
 }
 
 .loader-container {

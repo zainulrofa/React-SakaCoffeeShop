@@ -3,7 +3,15 @@ import {
   getPromoProduct,
   createProduct,
   editProduct,
+  getData,
 } from "../../helpers/fetch";
+
+const getProductsAction = (params) => {
+  return {
+    type: actionStrings.getProducts,
+    payload: getData("/products", params),
+  };
+};
 
 const getPromoProductAction = (id) => {
   return {
@@ -26,7 +34,7 @@ const editProductAction = (data, token, id) => {
 
 const productAction = {
   getPromoProductAction,
-
+  getProductsAction,
   createProductAction,
   editProductAction,
 };

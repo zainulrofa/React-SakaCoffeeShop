@@ -12,6 +12,7 @@ const initialState = {
   image: "",
   desc: "",
   ctg: "",
+  meta: { totalPage: null },
   tglnext: styles.hide,
   tglprev: styles.hide,
   next: null,
@@ -56,7 +57,6 @@ const productsReducer = (prevState = initialState, action) => {
         ...prevState,
         isError: true,
         isLoading: false,
-        data: [],
         err: errorMessage,
       };
     case actionStrings.getProductsPromo + actionStrings.rejected:
@@ -89,19 +89,12 @@ const productsReducer = (prevState = initialState, action) => {
       };
     case actionStrings.getProducts + actionStrings.fulfilled:
       const response = action.payload;
-      const result = response.data.data.data;
-      let toNext = styles.hide;
-      let toPrev = styles.hide;
-      if (response.data.data.next) toNext = styles.next;
-      if (response.data.data.prev) toPrev = styles.prev;
+      const result = response.data.result.result.data;
       return {
         ...prevState,
         isLoading: false,
         data: result,
-        next: response.data.data.next,
-        prev: response.data.data.prev,
-        tglnext: toNext,
-        tglprev: toPrev,
+        meta: { totalPage: response.data.result.result.meta.totalPage },
       };
     case actionStrings.getProductsPromo + actionStrings.fulfilled:
       const responsePromo = action.payload;

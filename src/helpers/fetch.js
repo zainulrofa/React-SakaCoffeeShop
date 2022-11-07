@@ -100,6 +100,15 @@ export const editProfile = (body) => {
   });
 };
 
+export const postPromo = (token, data) => {
+  return axios({
+    method: "POST",
+    url: `http://localhost:8060/api/v1/promos`,
+    data,
+    headers: { "access-token": token },
+  });
+};
+
 export const getHistory = () => {
   const login = JSON.parse(localStorage.getItem("userInfo"));
   const token = login.token;
