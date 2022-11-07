@@ -1,0 +1,141 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.main-add-product {
+  width: 80%;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+.add-title {
+  color: brown;
+}
+.main-section {
+  display: flex;
+}
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.left form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
+  margin: 0 auto;
+  gap: 1.5rem;
+}
+.left form.form-discount {
+  align-items: flex-start;
+}
+.form-discount input {
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+}
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  background: rgba(186, 186, 186, 0.35);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.image-dummy {
+  width: 5.75rem;
+  aspect-ratio: 1;
+}
+.image-preview {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+.btn-take-pic {
+  background-color: #0b132a;
+  color: white;
+}
+.btn-choose-gallery {
+  background: #ffba33;
+  color: #6a4029;
+}
+.right form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.content {
+  gap: 2.5rem;
+}
+.right label {
+  color: #6a4029;
+  font-weight: 700;
+}
+.right input {
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+}
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 80%;
+}
+.btn-save {
+  background-color: #6a4029;
+  color: white;
+}
+.none {
+  display: none;
+}
+
+.contentinput[type="number"] {
+  -moz-appearance: textfield;
+}
+@media screen and (max-width: 500px) {
+  .main-section {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .content form {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .btn-container {
+    width: 100%;
+  }
+  .content.right {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-section {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .content form {
+    margin-bottom: 1rem;
+  }
+  .btn-container {
+    width: 80%;
+  }
+  .content.right {
+    gap: 1rem;
+  }
+}

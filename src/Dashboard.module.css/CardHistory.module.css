@@ -1,0 +1,91 @@
+.card {
+    position: relative;
+}
+
+.card-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+    width: 25rem;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.card-bar:hover {
+    opacity: .5;
+    transition: 1.5s;
+}
+
+.delete {
+    position: absolute;
+    top: -1.5rem;
+    right: 2.5rem;
+    background-color: #6A4029;
+    border-radius: 50%;
+    padding: .5rem;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 111;
+}
+
+.delete img {
+    padding: .2rem;
+}
+
+.close {
+    position: absolute;
+    top: -1.5rem;
+    right: 0;
+    background-color: #FFBA33;
+    border-radius: 50%;
+    padding: .5rem;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 111;
+}
+
+.show {
+    opacity: 1;
+}
+
+.close span {
+    color: #6A4029;
+    font-weight: 700;
+    padding: 1rem .4rem;
+}
+
+.card-image img {
+    border-radius: 50%;
+    width: 6rem;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: .5rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-price {
+    color: #895537;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.deliv-method {
+    color: #6A4029;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+}
+

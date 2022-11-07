@@ -100,6 +100,20 @@ export const editProfile = (body) => {
   });
 };
 
+export const getPromo = () => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  console.log(token);
+  const URL =
+    // process.env.REACT_APP_HOST +
+    `http://localhost:8060/api/v1/promos`;
+  return axios.get(URL, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
 export const postPromo = (token, data) => {
   return axios({
     method: "POST",

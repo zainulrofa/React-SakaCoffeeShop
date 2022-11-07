@@ -9,7 +9,7 @@ import CardPromo from "../components/CardPromo";
 // import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
 import { useMemo } from "react";
-import { getData } from "../helpers/fetch";
+import { getData, getPromo } from "../helpers/fetch";
 import withSearchParams from "../helpers/withSearchParams";
 import { createSearchParams, Navigate, useLocation } from "react-router-dom";
 import withNavigate from "../helpers/withNavigate";
@@ -36,6 +36,7 @@ const Product = ({ setSearchParams, navigate }) => {
   const products = useSelector((state) => state.products.data);
   const totalPage = useSelector((state) => state.products.meta);
   const getQuery = useQuery();
+  const [promo, setPromo] = useState([]);
   // const [product, setProduct] = useState([]);
   // const [totalPage, setTotalPage] = useState(null);
   const [query, setQuery] = useState({
@@ -79,6 +80,16 @@ const Product = ({ setSearchParams, navigate }) => {
   //   categories: "",
   //   sort: "",
   // });
+
+  const getAllPromo = async () => {
+    try {
+      const result = await getPromo();
+      console.log(result.data.result);
+      setPromo(result.data.result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const getAllProduct = async () => {
   //   try {
@@ -150,9 +161,9 @@ const Product = ({ setSearchParams, navigate }) => {
   //   console.log(userinfo.payload);
   // });
 
-  // useEffect(() => {
-  //   getAllProduct();
-  // }, []);
+  useEffect(() => {
+    getAllPromo();
+  }, []);
 
   return (
     <>
@@ -165,11 +176,18 @@ const Product = ({ setSearchParams, navigate }) => {
             <div className={styles["promo-detail"]}>
               <div className={styles["back-bar"]}></div>
               <div className={styles["med-bar"]}></div>
-              <CardPromo
-                title="Chocolate Croissant"
-                discount="10%"
-                code="SAKA10"
-              />
+              {promo?.map((e, index) => {
+                console.log();
+                return (
+                  <CardPromo
+                    title={e.promo_name}
+                    discount={e.discount}
+                    description={e.description}
+                    code={e.code}
+                    image={e.image}
+                  />
+                );
+              })}
               {/* <button type="submit">Apply Coupon</button> */}
               <Button text="Apply Coupon" />
             </div>
