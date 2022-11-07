@@ -31,11 +31,6 @@
     z-index: 111;
 }
 
-.delete:hover {
-    opacity: 1;
-    transition: 1s;
-}
-
 .delete img {
     padding: .2rem;
 }
@@ -52,9 +47,8 @@
     z-index: 111;
 }
 
-.close:hover {
+.show {
     opacity: 1;
-    transition: 1s;
 }
 
 .close span {

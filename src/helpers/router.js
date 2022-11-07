@@ -13,6 +13,7 @@ import ProductDetails from "../pages/ProductDetails";
 import EditProduct from "../pages/EditProduct";
 import AddPromo from "../pages/AddPromo";
 import AddProduct from "../pages/AddProduct";
+import PrivateRoute from "../components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -33,15 +34,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/history",
-    element: <History />,
+    element: (
+      <PrivateRoute>
+        <History />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/payment",
-    element: <Payment />,
+    element: (
+      <PrivateRoute>
+        <Payment />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/product",
@@ -52,15 +65,15 @@ const router = createBrowserRouter([
     element: <ProductDetails />,
   },
   {
-    path: "/edit-product",
+    path: "/product/edit-product",
     element: <EditProduct />,
   },
   {
-    path: "/add-promo",
+    path: "/product/add-promo",
     element: <AddPromo />,
   },
   {
-    path: "/add-product",
+    path: "/product/add-product",
     element: <AddProduct />,
   },
 ]);

@@ -107,6 +107,10 @@ a {
     color: #4F5665;
 }
 
+.left-content .add-promo {
+    padding: 17rem 3rem;
+}
+
 .main-container .right-content {
     display: flex;
     flex-direction: column;
@@ -236,6 +240,11 @@ a {
     font-weight: 500;
 }
 
+.right-content .add-product {
+    width: 100%;
+    padding: 8.6rem 2rem;
+}
+
 /* hamburger */
 .menu-toggle {
     position: relative;
@@ -294,6 +303,10 @@ a {
         font-size: 1rem;
     }
 
+    .left-content .add-promo {
+        padding: 5rem 3rem;
+    }
+
     .right-content .content-detail {
         gap: 8rem 3rem;
         padding: 0;
@@ -311,6 +324,15 @@ a {
     .right-content .dropdown-content {
         position: absolute;
         top: 3.5rem;
+    }
+
+    .right-content .paginate-container {
+        padding: 2rem 2rem;
+    }
+
+    .right-content .add-product {
+        width: 100%;
+        padding: 1rem 2rem;
     }
 }
 

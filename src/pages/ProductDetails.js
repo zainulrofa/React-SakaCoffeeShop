@@ -60,7 +60,7 @@ function ProductDetails({ navigate }) {
     getDetail();
   }, []);
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [size, setSize] = useState("Size");
 
   function reguler() {
@@ -76,7 +76,10 @@ function ProductDetails({ navigate }) {
   }
 
   function decreamentCount() {
-    setCount((prevCount) => prevCount - 1);
+    setCount((prevCount) => {
+      if (prevCount === 0) return 0;
+      return prevCount - 1;
+    });
   }
 
   function increamentCount() {
@@ -110,7 +113,7 @@ function ProductDetails({ navigate }) {
                   ></img>
                 </div>
                 <h1>{product.product_name}</h1>
-                <h3> {currency(product.price)}</h3>
+                <h3> {currency(product.price * count)}</h3>
                 <Button text="Add to Cart" />
                 <Button text="Ask to Staff" variant="color-1" font="style-1" />
               </div>

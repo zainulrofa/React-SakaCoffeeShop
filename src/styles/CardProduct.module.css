@@ -63,9 +63,10 @@
     
     .content-bar .product-image {
         position: absolute;
-        width: 10.5rem;
+        width: 11rem;
+        height: 11rem;
         border-radius: 50%;
-        top: -5.5rem;
+        top: -6.5rem;
         box-shadow: rgb(57 57 57 / 10%) 0px 30px 60px;
     }
 }
@@ -80,6 +81,7 @@
     .content-bar .product-image {
         position: absolute;
         width: 15rem;
+        height: 15rem;
         border-radius: 50%;
         top: -5.5rem;
         box-shadow: rgb(57 57 57 / 10%) 0px 30px 60px;

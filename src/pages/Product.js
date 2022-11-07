@@ -11,7 +11,16 @@ import { useState, useEffect } from "react";
 import { useMemo } from "react";
 import { getData, getProduct } from "../helpers/fetch";
 import withSearchParams from "../helpers/withSearchParams";
-import { createSearchParams, useLocation } from "react-router-dom";
+import { createSearchParams, Navigate, useLocation } from "react-router-dom";
+import withNavigate from "../helpers/withNavigate";
+
+const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+let admin = null;
+
+if (userinfo && userinfo.payload.role === "Admin")
+  admin = userinfo.payload.role;
+console.log(admin);
+console.log(userinfo.payload);
 
 const useQuery = () => {
   const { search } = useLocation();
@@ -19,7 +28,7 @@ const useQuery = () => {
   return useMemo(() => new URLSearchParams(search), [search]);
 };
 
-const Product = ({ setSearchParams }) => {
+const Product = ({ setSearchParams, navigate }) => {
   const [isActive, setIsActive] = useState(false);
   const getQuery = useQuery();
   const [product, setProduct] = useState([]);
@@ -123,6 +132,16 @@ const Product = ({ setSearchParams }) => {
   };
 
   // useEffect(() => {
+  //   const userinfo = JSON.parse(localStorage.getItem("userInfo"));
+  //   let admin = null;
+
+  //   if (userinfo && userinfo.payload.role === "Admin")
+  //     admin = userinfo.payload.role;
+  //   console.log(admin);
+  //   console.log(userinfo.payload);
+  // });
+
+  // useEffect(() => {
   //   getAllProduct();
   // }, []);
 
@@ -153,6 +172,16 @@ const Product = ({ setSearchParams }) => {
             <li>3. Buy 1 get 1 only for new user</li>
             <li>4. Should make member card to apply coupon</li>
           </ol>
+          {admin && (
+            <div
+              className={styles["add-promo"]}
+              onClick={() => {
+                navigate("/product/add-promo");
+              }}
+            >
+              <Button text="Add Promo" variant="color-4" font="style-1" />
+            </div>
+          )}
         </aside>
         <main className={styles["right-content"]}>
           <div className={styles["head-content"]}>
@@ -292,7 +321,6 @@ const Product = ({ setSearchParams }) => {
                 image={e.image}
                 id={e.id}
                 key={e.id}
-                display="hidden"
               />
             ))}
           </div>
@@ -321,6 +349,16 @@ const Product = ({ setSearchParams }) => {
               </button>
             </div>
           </div>
+          {admin && (
+            <div
+              className={styles["add-product"]}
+              onClick={() => {
+                navigate("/product/add-product");
+              }}
+            >
+              <Button text="Add Product" />
+            </div>
+          )}
         </main>
       </section>
       <Footer />
@@ -328,4 +366,4 @@ const Product = ({ setSearchParams }) => {
   );
 };
 
-export default withSearchParams(Product);
+export default withNavigate(withSearchParams(Product));

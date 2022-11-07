@@ -9,6 +9,11 @@ import withNavigate from "../helpers/withNavigate";
 
 function History({ navigate }) {
   const [allHistory, setAllHistory] = useState([]);
+  const [show, setShow] = useState("");
+
+  function handleClass() {
+    setShow(() => "show");
+  }
 
   const getAllaHistory = async () => {
     const result = await getHistory();
@@ -40,6 +45,13 @@ function History({ navigate }) {
           </div>
           <div className="row">
             <div className="col-12">
+              <div className={styles.tab} onClick={handleClass}>
+                <h1>delete</h1>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
               <div className={styles.card}>
                 {/* {history.map((e) => (
                   <Card
@@ -59,6 +71,7 @@ function History({ navigate }) {
                       price={item.price}
                       status={item.status_name}
                       image={item.image}
+                      display={show}
                     />
                   );
                 })}
