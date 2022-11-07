@@ -17,23 +17,31 @@ function Profile({ navigate }) {
   const [body, setBody] = useState({});
   console.log(body);
 
+  const [displayName, setDisplayName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+
   // const changeHandler = (e) => [
   //   setBody({ ...body, [e.target.name]: e.target.value }),
   // ];
   const handleAddress = (e) => {
     setBody({ ...body, delivery_address: e.target.value });
+    setDeliveryAddress(e.target.value);
   };
   const handleDisplayName = (e) => {
     setBody({ ...body, display_name: e.target.value });
+    setDisplayName(e.target.value);
   };
   const handleFirstName = (e) => {
     setBody({ ...body, first_name: e.target.value });
+    setFirstName(e.target.value);
   };
   const handleLastName = (e) => {
     setBody({ ...body, last_name: e.target.value });
-  };
-  const handleDOB = (e) => {
-    setBody({ ...body, birhtday: e.target.value });
+    setLastName(e.target.value);
   };
   const handleGender = (e) => {
     setBody({ ...body, gender: e.target.value });
@@ -75,6 +83,14 @@ function Profile({ navigate }) {
       console.log(error);
     }
   };
+  const handleCancel = () => {
+    setDisplayName("");
+    setFirstName("");
+    setLastName("");
+    setDeliveryAddress("");
+    setEmailAddress("");
+    setMobileNumber("");
+  };
   const handleLogout = async () => {
     try {
       localStorage.removeItem("userInfo");
@@ -89,7 +105,15 @@ function Profile({ navigate }) {
   ];
 
   const getBirthday = () => {
-    return new Date(profile.birthday).toLocaleDateString();
+    const date = new Date(profile.birthday);
+    const yyyy = date.getFullYear();
+    let mm = date.getMonth() + 1; // Months start at 0!
+    let dd = date.getDate();
+
+    if (dd < 10) dd = "0" + dd;
+    if (mm < 10) mm = "0" + mm;
+
+    return dd + "/" + mm + "/" + yyyy;
   };
 
   useEffect(() => {
@@ -162,6 +186,7 @@ function Profile({ navigate }) {
                             type="text"
                             id="emailaddress"
                             disabled={isEdit}
+                            value={emailAddress}
                             placeholder={profile.email}
                           />
                         </div>
@@ -172,6 +197,7 @@ function Profile({ navigate }) {
                             id="deliveryaddress"
                             onChange={handleAddress}
                             disabled={isEdit}
+                            value={deliveryAddress}
                             placeholder={profile.address}
                           />
                         </div>
@@ -183,6 +209,7 @@ function Profile({ navigate }) {
                             type="tel"
                             id="mobilenumber"
                             disabled={isEdit}
+                            value={mobileNumber}
                             placeholder={profile.mobile_phone}
                           />
                         </div>
@@ -247,6 +274,7 @@ function Profile({ navigate }) {
                             id="displayname"
                             onChange={handleDisplayName}
                             disabled={isEdit}
+                            value={displayName}
                             placeholder={profile.display_name}
                           />
                         </div>
@@ -257,6 +285,7 @@ function Profile({ navigate }) {
                             id="firstname"
                             onChange={handleFirstName}
                             disabled={isEdit}
+                            value={firstName}
                             placeholder={profile.first_name}
                           />
                         </div>
@@ -267,6 +296,7 @@ function Profile({ navigate }) {
                             id="lastname"
                             onChange={handleLastName}
                             disabled={isEdit}
+                            value={lastName}
                             placeholder={profile.last_name}
                           />
                         </div>
@@ -275,8 +305,8 @@ function Profile({ navigate }) {
                         <div className={styles["input-div"]}>
                           <label for="date">Birthday:</label>
                           <input
-                            onChange={handleDOB}
                             disabled={isEdit}
+                            onChange={changeHandler}
                             name="birthday"
                             type={isEdit ? "text" : "date"}
                             placeholder={getBirthday()}
@@ -284,37 +314,49 @@ function Profile({ navigate }) {
                         </div>
                         <div className={styles.gender}>
                           <div className={styles.male}>
-                            <input
-                              type="radio"
-                              name="gender"
-                              id="male"
-                              value={profile.gender}
-                              disabled={isEdit}
-                              // onChange={changeHandler}
-                              defaultChecked={
-                                profile.gender === "male" ? "true" : "false"
-                              }
-                              onClick={(e) => {
-                                setBody({ ...body, gender: e.target.value });
-                              }}
-                            />
+                            {isEdit ? (
+                              <input
+                                // className={`${styles.circle} ${styles.cursor}`}
+                                // onChange={handleGender}
+                                type="radio"
+                                value="male"
+                                checked={
+                                  profile.gender === "male" ? true : false
+                                }
+                                name="gender"
+                              />
+                            ) : (
+                              <input
+                                // className={`${styles.circle} ${styles.cursor}`}
+                                onChange={handleGender}
+                                type="radio"
+                                value="male"
+                                name="gender"
+                              />
+                            )}
                             <label for="male">Male</label>
                           </div>
                           <div className={styles.female}>
-                            <input
-                              type="radio"
-                              name="gender"
-                              id="female"
-                              value={profile.gender}
-                              disabled={isEdit}
-                              // onChange={changeHandler}
-                              defaultChecked={
-                                profile.gender === "female" ? true : false
-                              }
-                              onClick={(e) => {
-                                setBody({ ...body, gender: e.target.value });
-                              }}
-                            />
+                            {isEdit ? (
+                              <input
+                                // className={`${styles.circle} ${styles.cursor}`}
+                                // onChange={handleGender}
+                                type="radio"
+                                value="female"
+                                checked={
+                                  profile.gender === "female" ? true : false
+                                }
+                                name="gender"
+                              />
+                            ) : (
+                              <input
+                                // className={`${styles.circle} ${styles.cursor}`}
+                                onChange={handleGender}
+                                type="radio"
+                                value="female"
+                                name="gender"
+                              />
+                            )}
                             <label for="female">Famale</label>
                           </div>
                         </div>
@@ -334,10 +376,7 @@ function Profile({ navigate }) {
                   </div>
                   <div
                     className={styles["button-width"]}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsEdit(isEdit);
-                    }}
+                    onClick={handleCancel}
                   >
                     <Button text="Cancel" variant="color-1" font="style-1" />
                   </div>
