@@ -273,8 +273,10 @@ const Product = ({ setSearchParams, navigate }) => {
                     onClick={() => {
                       setQuery({
                         sort: "newest",
-                        ...query,
+                        page: 1,
                       });
+                      const urlSearchParams = createSearchParams({ ...query });
+                      setSearchParams(urlSearchParams);
                     }}
                   >
                     newest
