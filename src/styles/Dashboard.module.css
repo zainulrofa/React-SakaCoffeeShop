@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+.bordercontainer {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.centerin {
+  justify-content: center;
+}
+
+.topContent {
+  padding-top: 50px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.radioOption {
+  padding-top: 30px;
+}
+
+.inputprofile[type=radio]{
+  clear: none;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+  transform: scale(2);
+}
+
+.inputprofile[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+.inputprofile[type='radio']:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  position: relative;
+  background-color: #ffa500;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+.checkboxgroup {
+  display: inline-block;
+  text-align: center;
+}
+.checkboxgroup label {
+  display: block;
+  padding: 0px 25px 0px 25px;
+}
+
+.LeftContainer {
+  padding-top: 40px;
+}
+
+.MainContainer {
+  display: flex;
+  gap: 3em;
+  justify-content: center;
+}
+
+.MonthlyContainer {
+  padding-top: 30px;
+  border-radius: 20px;
+  height: 717px;
+  width: 800px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.MonthlyTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 0px 20px;
+}
+
+.MonthlyTitle img {
+  height: 14px;
+  margin-top: 21px;
+}
+
+.ProfitText {
+  display: flex;
+  flex-direction: column;
+  gap: 3.8em;
+  padding-top: 90px;
+  padding-left: 40px;
+}
+
+.Statistik {
+  position: relative;
+  top: -330px;
+  left: 200px;
+}
+
+.ProfitBar img {
+  padding: 0px 70px 0px 0px;
+}
+
+.ProfitBar {
+  position: relative;
+  top: -10px;
+  left: 16px;
+}
+
+.jan {
+  position: relative;
+  top: 50px;
+}
+
+.mar {
+  position: relative;
+  top: 17px;
+}
+
+.apr {
+  position: relative;
+  top: 33px;
+}
+
+.may {
+  position: relative;
+  top: 12px;
+}
+
+.jun {
+  position: relative;
+  top: 22px;
+}
+
+.hr {
+  position: relative;
+  top: -19px;
+  border: 1px dashed black;
+  width: 500px;
+}
+
+.LossBar {
+  position: relative;
+  left: 15px;
+  top: -28px;
+}
+
+.LossBar img {
+  padding: 0px 70px 0px 0px;
+}
+
+.jan1 {
+  position: relative;
+  top: -25px;
+}
+
+.feb1 {
+  position: relative;
+  top: -17px;
+}
+
+.apr1 {
+  position: relative;
+  top: -28px;
+}
+
+.may1 {
+  position: relative;
+  top: -13px;
+}
+
+.jun1 {
+  position: relative;
+  top: -7px;
+}
+
+.Month {
+  display: flex;
+  gap: 3.9em;
+}
+
+.hr1 {
+  position: relative;
+  left: -155px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  width: 700px;
+}
+
+.IncomeBTN label {
+  padding-right: 90px;
+  padding-left: 30px;
+}
+
+.IncomeBTN {
+  padding-left: 40px;
+}
+
+/* Right Content */
+
+.RightContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  gap: 1em;
+}
+
+.StaffContainer {
+  border-radius: 20px;
+  width: 350px;
+  height: 350px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.hr2 {
+  margin: 0 auto;
+  width: 320px;
+}
+
+.Profile {
+  display: flex;
+  padding: 10px 0px 10px 23px;
+}
+
+.profilePic {
+  border-radius: 50%;
+  height: 60px;
+  margin: auto;
+}
+
+.ProfileName {
+  padding-left: 15px;
+  padding-top: 5px;
+}
+
+.Quote {
+  margin: auto;
+}
+
+.Staff {
+  text-align: center;
+  padding-top: 18px;
+}
+
+.CircleBar {
+  padding-top: 15px;
+}
+
+.StaffTxt {
+  font-size: 20px;
+}
+
+.AchieveTxt {
+  padding-top: 33px;
+}
+
+.GoalContainer {
+  text-align: center;
+  border-radius: 20px;
+  width: 350px;
+  height: 350px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.TitleGoal {
+  padding-top: 10px;
+}
+
+.GoalIcon {
+  padding-top: 10px;
+}
+
+.SlideGoal {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+/* button */
+
+.ReportBTN {
+  padding-top: 15px;
+  padding-bottom: 50px;
+}
+
+.BTN {
+  height: 70px;
+  width: 800px;
+  font-size: 20px;
+  margin: auto;
+  background-color: #6A4029;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.BTN1 {
+  height: 70px;
+  width: 350px;
+  font-size: 20px;
+  margin: auto;
+  background-color: #6A4029;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}

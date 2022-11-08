@@ -1,5 +1,5 @@
 import React from "react";
-import css from "../style/Dashboard.module.css";
+import styles from "../styles/Dashboard.module.css";
 import more from "../assets/img/more.png";
 import jan from "../assets/img/jan.png";
 import feb from "../assets/img/feb.png";
@@ -25,33 +25,33 @@ export default function Dashboard() {
   return (
     <>
       <Header />
-      <div className={css.bordercontainer}>
-        <div className={css.centerin}>
-          <div className={css.topContent}>
+      <div className={styles.bordercontainer}>
+        <div className={styles.centerin}>
+          <div className={styles.topContent}>
             <h1>See how your store progress so far</h1>
-            <div className={css.radioOption}>
-              <div id={css.checkboxes}>
-                <div className={css.checkboxgroup}>
+            <div className={styles.radioOption}>
+              <div id={styles.checkboxes}>
+                <div className={styles.checkboxgroup}>
                   <input
-                    className={css.inputprofile}
+                    className={styles.inputprofile}
                     type="radio"
                     name="radio"
                     id="my_radio_button_id1"
                   />
                   <label for="my_radio_button_id1">Daily</label>
                 </div>
-                <div className={css.checkboxgroup}>
+                <div className={styles.checkboxgroup}>
                   <input
-                    className={css.inputprofile}
+                    className={styles.inputprofile}
                     type="radio"
                     name="radio"
                     id="my_radio_button_id2"
                   />
                   <label for="my_radio_button_id2">Weekly</label>
                 </div>
-                <div className={css.checkboxgroup}>
+                <div className={styles.checkboxgroup}>
                   <input
-                    className={css.inputprofile}
+                    className={styles.inputprofile}
                     type="radio"
                     name="radio"
                     id="my_radio_button_id3"
@@ -61,38 +61,38 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className={css.MainContainer}>
-            <div className={css.LeftContainer}>
-              <div className={css.MonthlyContainer}>
-                <div className={css.MonthlyTitle}>
+          <div className={styles.MainContainer}>
+            <div className={styles.LeftContainer}>
+              <div className={styles.MonthlyContainer}>
+                <div className={styles.MonthlyTitle}>
                   <h1>Monthly Report</h1>
                   <img src={more} alt="" />
                 </div>
-                <div className={css.ProfitText}>
+                <div className={styles.ProfitText}>
                   <p>IDR 5M</p>
                   <p>IDR 3M</p>
                   <p>IDR 0K</p>
                   <p>IDR -2M</p>
                 </div>
-                <div className={css.Statistik}>
-                  <div className={css.ProfitBar}>
-                    <img className={css.jan} src={jan} alt="" />
-                    <img className={css.feb} src={feb} alt="" />
-                    <img className={css.mar} src={mar} alt="" />
-                    <img className={css.apr} src={apr} alt="" />
-                    <img className={css.may} src={may} alt="" />
-                    <img className={css.jun} src={jun} alt="" />
+                <div className={styles.Statistik}>
+                  <div className={styles.ProfitBar}>
+                    <img className={styles.jan} src={jan} alt="" />
+                    <img className={styles.feb} src={feb} alt="" />
+                    <img className={styles.mar} src={mar} alt="" />
+                    <img className={styles.apr} src={apr} alt="" />
+                    <img className={styles.may} src={may} alt="" />
+                    <img className={styles.jun} src={jun} alt="" />
                   </div>
-                  <hr className={css.hr} />
-                  <div className={css.LossBar}>
-                    <img className={css.jan1} src={jan1} alt="" />
-                    <img className={css.feb1} src={feb1} alt="" />
-                    <img className={css.mar1} src={mar1} alt="" />
-                    <img className={css.apr1} src={apr1} alt="" />
-                    <img className={css.may1} src={may1} alt="" />
-                    <img className={css.jun1} src={jun1} alt="" />
+                  <hr className={styles.hr} />
+                  <div className={styles.LossBar}>
+                    <img className={styles.jan1} src={jan1} alt="" />
+                    <img className={styles.feb1} src={feb1} alt="" />
+                    <img className={styles.mar1} src={mar1} alt="" />
+                    <img className={styles.apr1} src={apr1} alt="" />
+                    <img className={styles.may1} src={may1} alt="" />
+                    <img className={styles.jun1} src={jun1} alt="" />
                   </div>
-                  <div className={css.Month}>
+                  <div className={styles.Month}>
                     <p>Jan</p>
                     <p>Feb</p>
                     <p>Mar</p>
@@ -100,8 +100,8 @@ export default function Dashboard() {
                     <p>May</p>
                     <p>Jun</p>
                   </div>
-                  <hr className={css.hr1} />
-                  <div className={css.IncomeBTN}>
+                  <hr className={styles.hr1} />
+                  <div className={styles.IncomeBTN}>
                     <input type="radio" name="month" id="" />
                     <label htmlFor="">Income</label>
                     <input type="radio" name="month" id="" />
@@ -109,47 +109,47 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              <div className={css.ReportBTN}>
-                <button className={css.BTN}>Download Report</button>
+              <div className={styles.ReportBTN}>
+                <button className={styles.BTN}>Download Report</button>
               </div>
             </div>
 
-            <div className={css.RightContainer}>
-              <div className={css.StaffContainer}>
-                <div className={css.Profile}>
-                  <img className={css.profilePic} src={parker} alt="" />
-                  <div className={css.ProfileName}>
-                    <h5>Putra Parker</h5>
-                    <p className={css.Quote}>
+            <div className={styles.RightContainer}>
+              <div className={styles.StaffContainer}>
+                <div className={styles.Profile}>
+                  <img className={styles.profilePic} src="" alt="" />
+                  <div className={styles.ProfileName}>
+                    <h5>Admin</h5>
+                    <p className={styles.Quote}>
                       Keep up the good work and spread love!
                     </p>
                   </div>
                 </div>
-                <hr className={css.hr2} />
-                <div className={css.Staff}>
-                  <p className={css.StaffTxt}>Best Staff of the Month</p>
-                  <div className={css.CircleBar}>
+                <hr className={styles.hr2} />
+                <div className={styles.Staff}>
+                  <p className={styles.StaffTxt}>Best Staff of the Month</p>
+                  <div className={styles.CircleBar}>
                     <img src={progress} alt="" />
                   </div>
-                  <p className={css.AchieveTxt}>
+                  <p className={styles.AchieveTxt}>
                     Achieved 3.5M of total 5M 478 Customer
                   </p>
                 </div>
               </div>
-              <div className={css.GoalContainer}>
-                <div className={css.TitleGoal}>
+              <div className={styles.GoalContainer}>
+                <div className={styles.TitleGoal}>
                   <h3>Goals</h3>
                   <p>Your goals is still on 76%. Keep up the good work!</p>
                 </div>
-                <img className={css.GoalIcon} src={goalicon} alt="" />
-                <div className={css.SlideGoal}>
+                <img className={styles.GoalIcon} src={goalicon} alt="" />
+                <div className={styles.SlideGoal}>
                   <input type="radio" name="goal" id="" />
                   <input type="radio" name="goal" id="" />
                   <input type="radio" name="goal" id="" />
                 </div>
               </div>
-              <div className={css.ShareBTN}>
-                <button className={css.BTN1}>Share Report</button>
+              <div className={styles.ShareBTN}>
+                <button className={styles.BTN1}>Share Report</button>
               </div>
             </div>
           </div>

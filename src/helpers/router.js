@@ -14,6 +14,7 @@ import EditProduct from "../pages/EditProduct";
 import AddPromo from "../pages/AddPromo";
 import AddProduct from "../pages/AddProduct";
 import PrivateRoute from "../components/PrivateRoute";
+import Dashboard from "../pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: "/product/add-product",
     element: <AddProduct />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 

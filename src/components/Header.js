@@ -22,6 +22,8 @@ function Header({ navigate }) {
     ? JSON.parse(localStorage.getItem("userInfo")).token
     : "";
 
+  const role = JSON.parse(localStorage.getItem("userInfo")).payload.role || "";
+
   function slide() {
     setState((state) => ({
       text:
@@ -83,36 +85,69 @@ function Header({ navigate }) {
             Saka Coffee Shop
           </p>
         </div>
-        <ol className={text}>
-          <li
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            Home
-          </li>
-          <li
-            onClick={() => {
-              navigate("/product");
-            }}
-          >
-            Product
-          </li>
-          <li
-            onClick={() => {
-              navigate("/payment");
-            }}
-          >
-            Your Cart
-          </li>
-          <li
-            onClick={() => {
-              navigate("/history");
-            }}
-          >
-            History
-          </li>
-        </ol>
+        {role === "Admin" ? (
+          <ol className={text}>
+            <li
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </li>
+            <li
+              onClick={() => {
+                navigate("/product");
+              }}
+            >
+              Product
+            </li>
+            <li
+              onClick={() => {
+                navigate("/payment");
+              }}
+            >
+              Your Cart
+            </li>
+            <li
+              onClick={() => {
+                navigate("/dashboard");
+              }}
+            >
+              Dashboard
+            </li>
+          </ol>
+        ) : (
+          <ol className={text}>
+            <li
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </li>
+            <li
+              onClick={() => {
+                navigate("/product");
+              }}
+            >
+              Product
+            </li>
+            <li
+              onClick={() => {
+                navigate("/payment");
+              }}
+            >
+              Your Cart
+            </li>
+            <li
+              onClick={() => {
+                navigate("/history");
+              }}
+            >
+              History
+            </li>
+          </ol>
+        )}
       </div>
       {token ? (
         <section className={text}>
