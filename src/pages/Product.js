@@ -150,7 +150,9 @@ const Product = ({ setSearchParams, navigate }) => {
     setIsActive(!isActive);
   };
 
-  const role = JSON.parse(localStorage.getItem("userInfo")).payload.role || "";
+  const role = JSON.parse(localStorage.getItem("userInfo"))
+    ? JSON.parse(localStorage.getItem("userInfo")).payload.role
+    : "";
   // useEffect(() => {
   console.log(role);
   //   let admin = null;
