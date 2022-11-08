@@ -83,7 +83,7 @@ const AddPromo = () => {
       <main className={styles["main-add-product"]}>
         <p className={styles["category-text"]}>
           Favorites and Promos{" "}
-          <span className={styles["add-title"]}> &#62; Add new product</span>
+          <span className={styles["add-title"]}> &#62; Add new promo</span>
         </p>
         <section className={styles["main-section"]}>
           <section className={`${styles["content"]} ${styles["left"]}`}>
@@ -171,7 +171,7 @@ const AddPromo = () => {
                 }}
                 className={`${styles["btn"]} ${styles["btn-save"]}`}
               >
-                Save Product
+                Save Promo
               </button>
               <button className={`${styles["btn"]} ${styles["btn-cancel"]}`}>
                 Cancel

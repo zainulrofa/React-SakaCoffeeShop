@@ -117,6 +117,17 @@ form .input-title {
     user-select: none;
 }
 
+.btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    cursor: pointer;
+  }
+  
+  .btn:active {
+    position: relative;
+    top: 2px;
+  }
+
 .take-img {
     color: #FFFFFF;
     background-color: #0B132A;
@@ -157,9 +168,16 @@ form .input-title {
     font-weight: 500;
 }
 
-.save-btn:active {
-    background-color: #5f3016;
-}
+.save-btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    cursor: pointer;
+  }
+  
+  .save-btn:active {
+    position: relative;
+    top: 2px;
+  }
 
 .cancel-btn {
     color: #4F5665;
@@ -167,9 +185,16 @@ form .input-title {
     margin: 0;
 }
 
-.cancel-btn:active {
-    background-color: #7c7c7c59;
-}
+.cancel-btn:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    cursor: pointer;
+  }
+  
+  .cancel-btn:active {
+    position: relative;
+    top: 2px;
+  }
 
 .box-btn-methods {
     display: flex;

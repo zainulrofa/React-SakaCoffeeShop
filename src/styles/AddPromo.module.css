@@ -67,10 +67,34 @@ input::-webkit-inner-spin-button {
   background-color: #0b132a;
   color: white;
 }
+
+.btn-take-pic:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.btn-take-pic:active {
+  position: relative;
+  top: 2px;
+}
+
 .btn-choose-gallery {
   background: #ffba33;
   color: #6a4029;
 }
+
+.btn-choose-gallery:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.btn-choose-gallery:active {
+  position: relative;
+  top: 2px;
+}
+
 .right form {
   width: 80%;
   display: flex;
@@ -100,6 +124,29 @@ input::-webkit-inner-spin-button {
   background-color: #6a4029;
   color: white;
 }
+
+.btn-save:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.btn-save:active {
+  position: relative;
+  top: 2px;
+}
+
+.btn-cancel:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.btn-cancel:active {
+  position: relative;
+  top: 2px;
+}
+
 .none {
   display: none;
 }
