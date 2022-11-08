@@ -150,7 +150,7 @@ const AddPromo = () => {
                 type="text"
                 placeholder="Input promo name"
               />
-              <label htmlFor="price">Price:</label>
+              <label htmlFor="price">Min. Price:</label>
               <input
                 onChange={changeHandler}
                 name="min_price"
