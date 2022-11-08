@@ -59,6 +59,7 @@ a {
     border-radius: 1rem;
     right: -2rem;
     top: 2rem;
+    display: none;
 }
 
 .main-container .left-content .promo-detail .back-bar {
@@ -69,6 +70,7 @@ a {
     border-radius: 1rem;
     right: -3.5rem;
     top: 3.7rem;
+    display: none;
 }
 
 .main-container .left-content .promo-detail {

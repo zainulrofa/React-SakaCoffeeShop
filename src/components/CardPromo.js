@@ -7,7 +7,7 @@ function CardPromo(props) {
       <div className={styles.top}>
         <img src={`http://localhost:8060/${props.image}`} alt="menu-promo" />
         <h2>{props.title}</h2>
-        <h2>{props.discount} OFF</h2>
+        <h2>{props.discount}% OFF</h2>
         <p>
           {props.description} {props.title}
         </p>
