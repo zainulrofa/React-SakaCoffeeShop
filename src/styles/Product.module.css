@@ -162,7 +162,7 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     padding: .5rem 1rem;
     background-color: white;
     box-shadow: 3px 3px 10px 6px rgb(0, 0, 0, 0.06);
@@ -342,10 +342,22 @@ a {
     }
 
     .right-content .content-detail {
-        padding: 0;
+        padding: 4rem;
     }
 
     .right-content .content-detail {
     justify-content: center;
+    }
+
+    .right-content .dropdown-btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .right-content .dropdown-btn h2 {
+        font-size: .8rem;
+        font-weight: 700;
+        
     }
 }
