@@ -20,7 +20,7 @@ export const login = (data) => {
 };
 
 export const signup = (body) => {
-  const URL = `${process.env.REACT_APP_BACKEND_HOST}api/v1/users`;
+  const URL = `http://localhost:8060/api/v1/users`;
   return axios.post(URL, body);
 };
 
