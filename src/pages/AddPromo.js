@@ -63,7 +63,8 @@ const AddPromo = () => {
     });
     try {
       const response = await postPromo(token, formData);
-      console.log(response);
+      return navigate("/product");
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
