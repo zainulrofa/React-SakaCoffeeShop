@@ -19,7 +19,7 @@ function ForgotPwd() {
         </div>
         <div className={`${styles["mid-content"]} container`}>
           <div className="row">
-            <div className="col-8">
+            <div className="col-lg-8 my-2">
               <div className={styles["email-bar"]}>
                 <input
                   type="text"
@@ -27,7 +27,7 @@ function ForgotPwd() {
                 ></input>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-lg-4">
               <Button text="Send" variant="color-1" font="style-1" />
             </div>
           </div>
