@@ -10,6 +10,7 @@ const initialState = {
   name: "",
   price: "",
   image: "",
+  img: false,
   desc: "",
   ctg: "",
   meta: { totalPage: null },
@@ -98,23 +99,24 @@ const productsReducer = (prevState = initialState, action) => {
       };
     case actionStrings.getProductsPromo + actionStrings.fulfilled:
       const responsePromo = action.payload;
-      const resultPromo = responsePromo.data.data;
+      const resultPromo = responsePromo.data.result.data;
+      console.log(resultPromo);
       return {
         ...prevState,
         isLoading: false,
-        id: resultPromo.dataProduct.id,
-        name: resultPromo.dataProduct.product_name,
-        price: resultPromo.dataProduct.price,
-        image: resultPromo.dataProduct.image,
-        desc: resultPromo.dataProduct.description,
-        ctg: resultPromo.dataProduct.category_name,
-        promo: resultPromo.dataPromo,
+        id: resultPromo.id,
+        name: resultPromo.product_name,
+        price: resultPromo.price,
+        image: resultPromo.image,
+        desc: resultPromo.description,
+        ctg: resultPromo.category_name,
+        // promo: resultPromo.dataPromo,
       };
     case actionStrings.createProduct + actionStrings.fulfilled:
       const responseCreate = action.payload;
       const resultCreate = responseCreate.data.data;
-      console.log(responseCreate);
-      console.log(resultCreate);
+      // console.log(responseCreate);
+      // console.log(resultCreate);
       return {
         ...prevState,
         isLoading: false,
@@ -127,6 +129,7 @@ const productsReducer = (prevState = initialState, action) => {
         ...prevState,
         isLoading: false,
         dataEdit: resultEdits,
+        img: true,
       };
     default:
       return prevState;
