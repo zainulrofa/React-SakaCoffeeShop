@@ -26,6 +26,7 @@ class AddProduct extends React.Component {
   }
 
   getCategory = () => {
+    // console.log(this.props.product);
     if (!this.props.product.isLoading) {
       if (this.props.product.ctg) return `${this.props.product.ctg}`;
       return "Loading....";
@@ -37,9 +38,8 @@ class AddProduct extends React.Component {
     const userinfo = JSON.parse(localStorage.getItem("userInfo"));
     let body = new FormData();
     if (this.state.nameProduct)
-      body.append("nameProduct", this.state.nameProduct);
-    if (this.state.priceProduct)
-      body.append("priceProduct", this.state.priceProduct);
+      body.append("product_name", this.state.nameProduct);
+    if (this.state.priceProduct) body.append("price", this.state.priceProduct);
     if (this.state.description)
       body.append("description", this.state.description);
     if (this.state.newPicture) body.append("image", this.state.newPicture);
@@ -55,7 +55,9 @@ class AddProduct extends React.Component {
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.product.dataEdit !== this.props.product.dataEdit)
-      return this.props.navigate(`/product-details/${this.props.params.id}`);
+      return this.props.navigate(`/product-detail/${this.props.params.id}`);
+    if (prevProps.product.img !== this.props.product.img)
+      return this.props.navigate(`/product-detail/${this.props.params.id}`);
     // if (prevState.state !== this.state){
     //     return this.sendSelect()
     // }
@@ -77,7 +79,7 @@ class AddProduct extends React.Component {
       this.props.product.image &&
       !this.state.newPicture
     )
-      return this.props.product.image;
+      return `http://localhost:8060/${this.props.product.image}`;
     if (
       !this.props.product.isLoading &&
       this.props.product.image &&
@@ -212,7 +214,7 @@ class AddProduct extends React.Component {
                             onClick={() => {
                               this.setState({
                                 selectCtg: "Foods",
-                                ctg_id: 1,
+                                ctg_id: 2,
                                 selectCategory: false,
                               });
                             }}
@@ -223,7 +225,7 @@ class AddProduct extends React.Component {
                             onClick={() => {
                               this.setState({
                                 selectCtg: "Coffee",
-                                ctg_id: 2,
+                                ctg_id: 1,
                                 selectCategory: false,
                               });
                             }}
