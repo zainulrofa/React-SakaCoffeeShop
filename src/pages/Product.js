@@ -34,7 +34,8 @@ const Product = ({ setSearchParams, navigate }) => {
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.data);
-  const totalPage = useSelector((state) => state.products.meta);
+  const totalPage = useSelector((state) => state.products.meta.totalPage);
+  const nextPage = useSelector((state) => state.products);
   const getQuery = useQuery();
   const [promo, setPromo] = useState([]);
   // const [product, setProduct] = useState([]);
@@ -47,8 +48,9 @@ const Product = ({ setSearchParams, navigate }) => {
     sort: getQuery.get("sort") ? getQuery.get("sort") : "popular",
     page: getQuery.get("page") ? getQuery.get("page") : 1,
   });
+  const [selected, setSelected] = useState("favorite");
 
-  console.log(products);
+  console.log(nextPage);
   // const fetchData = async (query) => {
   //   try {
   //     const products = await getData(`/products`, query);
@@ -65,7 +67,7 @@ const Product = ({ setSearchParams, navigate }) => {
   //     console.log(error);
   //   }
   // };
-  console.log(totalPage);
+  // console.log(totalPage);
   useEffect(() => {
     // fetchData(query);
     dispatch(action.getProductsAction(query));
@@ -171,13 +173,13 @@ const Product = ({ setSearchParams, navigate }) => {
     <>
       <Header />
       <section className={styles["main-container"]}>
-        <aside className={styles["left-content"]}>
+        <main className={styles["left-content"]}>
           <div className={styles.promo}>
             <h1>Promo for you</h1>
             <p>Coupons will be updated every weeks. Check them out! </p>
             <div className={styles["promo-detail"]}>
-              <div className={styles["back-bar"]}></div>
-              <div className={styles["med-bar"]}></div>
+              {/* <div className={styles["back-bar"]}></div>
+              <div className={styles["med-bar"]}></div> */}
               {promo?.map((e, index) => {
                 console.log();
                 return (
@@ -211,126 +213,147 @@ const Product = ({ setSearchParams, navigate }) => {
               <Button text="Add Promo" variant="color-4" font="style-1" />
             </div>
           )}
-        </aside>
-        <main className={styles["right-content"]}>
-          <div className={styles["head-content"]}>
-            <ul>
-              <li
-                onClick={() => {
-                  setQuery({
-                    sort: "popular",
-                    page: 1,
-                  });
-                }}
-              >
-                Favorite Product
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    categories: "Coffee",
-                    page: 1,
-                  });
-                  const urlSearchParams = createSearchParams({ ...query });
-                  setSearchParams(urlSearchParams);
-                }}
-              >
-                Coffee
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    categories: "Non Coffee",
-                    page: 1,
-                  });
-                  const urlSearchParams = createSearchParams({ ...query });
-                  setSearchParams(urlSearchParams);
-                }}
-              >
-                Non Coffee
-              </li>
-              <li
-                onClick={() => {
-                  setQuery({
-                    categories: "Foods",
-                    page: 1,
-                  });
-                }}
-              >
-                Foods
-              </li>
-              <li>Add-on</li>
-            </ul>
-          </div>
-
-          <div className={styles.dropdown}>
-            <div className={styles["dropdown-btn"]} onClick={handleDropdown}>
-              <h2>Sort by</h2>
-              <span>&#9660;</span>
+        </main>
+        <aside>
+          <main className={styles["right-content"]}>
+            <div className={styles["head-content"]}>
+              <ul>
+                <li
+                  onClick={() => {
+                    setSelected("favorite");
+                    setQuery({
+                      sort: "popular",
+                      page: 1,
+                    });
+                  }}
+                  className={
+                    selected === "favorite" &&
+                    `${styles["selected"]} ${styles["category"]}`
+                  }
+                >
+                  Favorite Product
+                </li>
+                <li
+                  onClick={() => {
+                    setSelected("coffee");
+                    setQuery({
+                      categories: "Coffee",
+                      page: 1,
+                    });
+                    const urlSearchParams = createSearchParams({ ...query });
+                    setSearchParams(urlSearchParams);
+                  }}
+                  className={
+                    selected === "coffee" &&
+                    `${styles["selected"]} ${styles["category"]}`
+                  }
+                >
+                  Coffee
+                </li>
+                <li
+                  onClick={() => {
+                    setSelected("non coffee");
+                    setQuery({
+                      categories: "Non Coffee",
+                      page: 1,
+                    });
+                    const urlSearchParams = createSearchParams({ ...query });
+                    setSearchParams(urlSearchParams);
+                  }}
+                  className={
+                    selected === "non coffee" &&
+                    `${styles["selected"]} ${styles["category"]}`
+                  }
+                >
+                  Non Coffee
+                </li>
+                <li
+                  onClick={() => {
+                    setSelected("foods");
+                    setQuery({
+                      categories: "Foods",
+                      page: 1,
+                    });
+                  }}
+                  className={
+                    selected === "foods" &&
+                    `${styles["selected"]} ${styles["category"]}`
+                  }
+                >
+                  Foods
+                </li>
+                <li>Add-on</li>
+              </ul>
             </div>
-            {isActive && (
-              <div className={styles["dropdown-content"]}>
-                <div className={styles["dropdown-item"]}>
-                  <p
-                    onClick={() => {
-                      setQuery({
-                        sort: "newest",
-                        page: 1,
-                      });
-                      const urlSearchParams = createSearchParams({ ...query });
-                      setSearchParams(urlSearchParams);
-                    }}
-                  >
-                    newest
-                  </p>
-                </div>
-                <div className={styles["dropdown-item"]}>
-                  <p
-                    onClick={() => {
-                      setQuery({
-                        sort: "oldest",
-                        page: 1,
-                      });
-                      const urlSearchParams = createSearchParams({ ...query });
-                      setSearchParams(urlSearchParams);
-                    }}
-                  >
-                    oldest
-                  </p>
-                </div>
-                <div className={styles["dropdown-item"]}>
-                  <p
-                    onClick={() => {
-                      setQuery({
-                        sort: "priciest",
-                        page: 1,
-                      });
-                      const urlSearchParams = createSearchParams({ ...query });
-                      setSearchParams(urlSearchParams);
-                    }}
-                  >
-                    priciest
-                  </p>
-                </div>
-                <div className={styles["dropdown-item"]}>
-                  <p
-                    onClick={() => {
-                      setQuery({
-                        sort: "cheapest",
-                        page: 1,
-                      });
-                      const urlSearchParams = createSearchParams({ ...query });
-                      setSearchParams(urlSearchParams);
-                    }}
-                  >
-                    cheapest
-                  </p>
-                </div>
+            <div className={styles.dropdown}>
+              <div className={styles["dropdown-btn"]} onClick={handleDropdown}>
+                <h2>Sort by</h2>
+                <span>&#9660;</span>
               </div>
-            )}
-          </div>
-          <div className={styles["content-detail"]}>
-            {/* {allProduct?.map((e, index) => {
+              {isActive && (
+                <div className={styles["dropdown-content"]}>
+                  <div className={styles["dropdown-item"]}>
+                    <p
+                      onClick={() => {
+                        setQuery({ ...query, sort: "newest" });
+                      }}
+                    >
+                      newest
+                    </p>
+                  </div>
+                  <div className={styles["dropdown-item"]}>
+                    <p
+                      onClick={() => {
+                        setQuery({
+                          sort: "oldest",
+                          page: 1,
+                        });
+                        const urlSearchParams = createSearchParams({
+                          ...query,
+                        });
+                        setSearchParams(urlSearchParams);
+                      }}
+                    >
+                      oldest
+                    </p>
+                  </div>
+                  <div className={styles["dropdown-item"]}>
+                    <p
+                      onClick={() => {
+                        setQuery({
+                          sort: "priciest",
+                          page: 1,
+                        });
+                        const urlSearchParams = createSearchParams({
+                          ...query,
+                        });
+                        setSearchParams(urlSearchParams);
+                      }}
+                    >
+                      priciest
+                    </p>
+                  </div>
+                  <div className={styles["dropdown-item"]}>
+                    <p
+                      onClick={() => {
+                        setQuery({
+                          sort: "cheapest",
+                          page: 1,
+                        });
+                        const urlSearchParams = createSearchParams({
+                          ...query,
+                        });
+                        setSearchParams(urlSearchParams);
+                      }}
+                    >
+                      cheapest
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className={styles["content-detail"]}>
+              {/* {allProduct?.map((e, index) => {
               console.log();
               return (
                 <Card
@@ -343,27 +366,30 @@ const Product = ({ setSearchParams, navigate }) => {
                 />
               );
             })} */}
-            {products.map((e) => (
-              <Card
-                text={e.product_name}
-                price={e.price}
-                image={e.image}
-                id={e.id}
-                key={e.id}
-              />
-            ))}
-          </div>
+              {products.map((e) => (
+                <Card
+                  text={e.product_name}
+                  price={e.price}
+                  image={e.image}
+                  id={e.id}
+                  key={e.id}
+                />
+              ))}
+            </div>
+          </main>
           <div className={`${styles["paginate-container"]}`}>
             <div className={styles["title-paginate"]}>
-              <p>{`showing page ${query.page} of ${totalPage.totalPage}`}</p>
+              <p>{`showing page ${query.page} of ${totalPage}`}</p>
             </div>
             <div className={styles["btn-paginate"]}>
               <button
                 onClick={() => {
                   setQuery({ ...query, page: query.page - 1 });
                 }}
-                disabled={query.page === 1 ? true : false}
-                className={`${styles["btn-prev"]}`}
+                // disabled={query.page === 1 ? true : false}
+                className={`${styles["btn-prev"]} ${
+                  query.page === 1 && styles["disable-btn"]
+                }`}
               >
                 prev
               </button>
@@ -371,8 +397,10 @@ const Product = ({ setSearchParams, navigate }) => {
                 onClick={() => {
                   setQuery({ ...query, page: query.page + 1 });
                 }}
-                disabled={query.page === totalPage ? true : false}
-                className={`${styles["btn-next"]}`}
+                // disabled={query.page === totalPage ? true : false}
+                className={`${styles["btn-next"]} ${
+                  query.page === totalPage && styles["disable-btn"]
+                }`}
               >
                 next
               </button>
@@ -385,10 +413,10 @@ const Product = ({ setSearchParams, navigate }) => {
                 navigate("/product/add-product");
               }}
             >
-              <Button text="Add Product" />
+              <Button text="Add Product" variant="color-5" />
             </div>
           )}
-        </main>
+        </aside>
       </section>
       <Footer />
     </>
