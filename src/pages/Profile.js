@@ -4,16 +4,21 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
+import defaultImg from "../assets/img/default-photo.png";
 import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
 import { useState, useEffect, useRef } from "react";
 import { editProfile, getProfile } from "../helpers/fetch";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfileActions } from "../redux/actions/profile";
 
 function Profile({ navigate }) {
+  const dispatch = useDispatch();
   const target = useRef(null);
-  const [profile, setProfile] = useState({});
+  const profile = useSelector((state) => state.profile.profile);
+  // const [profile, setProfile] = useState({});
   const [isEdit, setIsEdit] = useState(true);
-  const [imgPrev, setImgPrev] = useState();
+  const [imgPrev, setImgPrev] = useState(null);
   const [body, setBody] = useState({});
   console.log(body);
 
@@ -52,19 +57,19 @@ function Profile({ navigate }) {
     setImgPrev(URL.createObjectURL(e.target.files[0]));
   };
 
-  const getDataProfile = async () => {
-    try {
-      const result = await getProfile();
-      console.log(result.data.result[0]);
-      setProfile(result.data.result[0]);
-    } catch (error) {
-      // console.log(error);
-      // console.log(error.response.data.statusCode);
-      if (error.response.data.statusCode === 403) {
-        navigate("/login");
-      }
-    }
-  };
+  // const getDataProfile = async () => {
+  //   try {
+  //     const result = await getProfile();
+  //     console.log(result.data.result[0]);
+  //     setProfile(result.data.result[0]);
+  //   } catch (error) {
+  //     // console.log(error);
+  //     // console.log(error.response.data.statusCode);
+  //     if (error.response.data.statusCode === 403) {
+  //       navigate("/login");
+  //     }
+  //   }
+  // };
 
   const handleSaveChange = async () => {
     const formData = new FormData();
@@ -78,11 +83,12 @@ function Profile({ navigate }) {
       await editProfile(formData);
       setBody({});
       setIsEdit(true);
-      await getDataProfile();
+      await dispatch(getProfileActions());
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleCancel = () => {
     setDisplayName("");
     setFirstName("");
@@ -117,7 +123,7 @@ function Profile({ navigate }) {
   };
 
   useEffect(() => {
-    getDataProfile();
+    dispatch(getProfileActions());
   }, []);
 
   return (
