@@ -7,7 +7,7 @@ function CardHistory(props) {
   return (
     <div className={styles.card}>
       <div className="side-bar">
-        <div className={`{styles.delete}`}>
+        <div className={`${styles.delete} ${props.display}`}>
           <img src={bean} alt="bean"></img>
         </div>
         <div className={`${styles.close} ${props.display}`}>
