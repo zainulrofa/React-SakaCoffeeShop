@@ -123,6 +123,28 @@ export const postPromo = (token, data) => {
   });
 };
 
+export const createPromo = (body) => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  const URL = `http://localhost:8060/api/v1/promos`;
+  return axios.post(URL, body, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
+export const editPromo = (body, id) => {
+  const login = JSON.parse(localStorage.getItem("userInfo"));
+  const token = login.token;
+  const URL = `http://localhost:8060/api/v1/promos/${id}`;
+  return axios.patch(URL, body, {
+    headers: {
+      "access-token": token,
+    },
+  });
+};
+
 export const getHistory = () => {
   const login = JSON.parse(localStorage.getItem("userInfo"));
   const token = login.token;
