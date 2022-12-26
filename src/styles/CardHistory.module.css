@@ -60,6 +60,7 @@
 .card-image img {
     border-radius: 50%;
     width: 6rem;
+    aspect-ratio: 1;
 }
 
 .card-content {

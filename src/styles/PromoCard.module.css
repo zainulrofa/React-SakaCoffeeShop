@@ -53,3 +53,25 @@
     font-weight: 400;
     margin-top: 1rem;
 }
+
+.med-bar {
+    position: absolute;
+    height: 90%;
+    padding: 5rem;
+    background-color: black;
+    border-radius: 1rem;
+    right: -2rem;
+    top: 2rem;
+    display: none;
+}
+
+.back-bar {
+    position: absolute;
+    height: 80%;
+    padding: 5rem;
+    background-color: #895537;
+    border-radius: 1rem;
+    right: -3.5rem;
+    top: 3.7rem;
+    display: none;
+}
