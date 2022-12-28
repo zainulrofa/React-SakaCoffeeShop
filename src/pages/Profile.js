@@ -4,18 +4,18 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 
-import defaultImg from "../assets/img/default-photo.png";
+// import defaultImg from "../assets/img/default-photo.png";
 import pencil from "../assets/img/pencil.png";
 import withNavigate from "../helpers/withNavigate";
 import { useState, useEffect, useRef } from "react";
 import { editProfile, getProfile } from "../helpers/fetch";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileActions } from "../redux/actions/profile";
+// import { getProfileActions } from "../redux/actions/profile";
 
 function Profile({ navigate }) {
   const dispatch = useDispatch();
   const target = useRef(null);
-  const profile = useSelector((state) => state.profile.profile);
+  // const profile = useSelector((state) => state.profile.profile);
   // const [profile, setProfile] = useState({});
   const [isEdit, setIsEdit] = useState(true);
   const [imgPrev, setImgPrev] = useState(null);
@@ -83,7 +83,7 @@ function Profile({ navigate }) {
       await editProfile(formData);
       setBody({});
       setIsEdit(true);
-      await dispatch(getProfileActions());
+      // await dispatch(getProfileActions());
     } catch (error) {
       console.log(error);
     }
@@ -110,21 +110,21 @@ function Profile({ navigate }) {
     setBody({ ...body, [e.target.name]: e.target.value }),
   ];
 
-  const getBirthday = () => {
-    const date = new Date(profile.birthday);
-    const yyyy = date.getFullYear();
-    let mm = date.getMonth() + 1; // Months start at 0!
-    let dd = date.getDate();
+  // const getBirthday = () => {
+  //   const date = new Date(profile.birthday);
+  //   const yyyy = date.getFullYear();
+  //   let mm = date.getMonth() + 1; // Months start at 0!
+  //   let dd = date.getDate();
 
-    if (dd < 10) dd = "0" + dd;
-    if (mm < 10) mm = "0" + mm;
+  //   if (dd < 10) dd = "0" + dd;
+  //   if (mm < 10) mm = "0" + mm;
 
-    return dd + "/" + mm + "/" + yyyy;
-  };
+  //   return dd + "/" + mm + "/" + yyyy;
+  // };
 
-  useEffect(() => {
-    dispatch(getProfileActions());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProfileActions());
+  // }, []);
 
   return (
     <>
@@ -147,7 +147,7 @@ function Profile({ navigate }) {
                   <div className={styles["profile-img"]}>
                     <img
                       className={styles["profile-people"]}
-                      src={imgPrev ?? `http://localhost:8060/${profile.image}`}
+                      // src={imgPrev ?? `http://localhost:8060/${profile.image}`}
                       alt="profile"
                     />
                     <div
@@ -166,8 +166,8 @@ function Profile({ navigate }) {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <h2>{profile.display_name}</h2>
-                  <p>{profile.email}</p>
+                  {/* <h2>{profile.display_name}</h2> */}
+                  {/* <p>{profile.email}</p> */}
                   <h3>Has been ordered 1 products</h3>
                 </div>
               </div>
@@ -193,7 +193,7 @@ function Profile({ navigate }) {
                             id="emailaddress"
                             disabled={isEdit}
                             value={emailAddress}
-                            placeholder={profile.email}
+                            // placeholder={profile.email}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -204,7 +204,7 @@ function Profile({ navigate }) {
                             onChange={handleAddress}
                             disabled={isEdit}
                             value={deliveryAddress}
-                            placeholder={profile.address}
+                            // placeholder={profile.address}
                           />
                         </div>
                       </div>
@@ -216,7 +216,7 @@ function Profile({ navigate }) {
                             id="mobilenumber"
                             disabled={isEdit}
                             value={mobileNumber}
-                            placeholder={profile.mobile_phone}
+                            // placeholder={profile.mobile_phone}
                           />
                         </div>
                       </div>
@@ -281,7 +281,7 @@ function Profile({ navigate }) {
                             onChange={handleDisplayName}
                             disabled={isEdit}
                             value={displayName}
-                            placeholder={profile.display_name}
+                            // placeholder={profile.display_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -292,7 +292,7 @@ function Profile({ navigate }) {
                             onChange={handleFirstName}
                             disabled={isEdit}
                             value={firstName}
-                            placeholder={profile.first_name}
+                            // placeholder={profile.first_name}
                           />
                         </div>
                         <div className={styles["input-div"]}>
@@ -303,7 +303,7 @@ function Profile({ navigate }) {
                             onChange={handleLastName}
                             disabled={isEdit}
                             value={lastName}
-                            placeholder={profile.last_name}
+                            // placeholder={profile.last_name}
                           />
                         </div>
                       </div>
@@ -315,7 +315,7 @@ function Profile({ navigate }) {
                             onChange={changeHandler}
                             name="birthday"
                             type={isEdit ? "text" : "date"}
-                            placeholder={getBirthday()}
+                            // placeholder={getBirthday()}
                           />
                         </div>
                         <div className={styles.gender}>
@@ -326,9 +326,9 @@ function Profile({ navigate }) {
                                 // onChange={handleGender}
                                 type="radio"
                                 value="male"
-                                checked={
-                                  profile.gender === "male" ? true : false
-                                }
+                                // checked={
+                                //   profile.gender === "male" ? true : false
+                                // }
                                 name="gender"
                               />
                             ) : (
@@ -349,9 +349,9 @@ function Profile({ navigate }) {
                                 // onChange={handleGender}
                                 type="radio"
                                 value="female"
-                                checked={
-                                  profile.gender === "female" ? true : false
-                                }
+                                // checked={
+                                //   profile.gender === "female" ? true : false
+                                // }
                                 name="gender"
                               />
                             ) : (

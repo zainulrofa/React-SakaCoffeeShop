@@ -1,42 +1,40 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import styles from "../styles/Login.module.css";
 import withNavigate from "../helpers/withNavigate";
 import Footer from "../components/Footer";
-import { login } from "../helpers/fetch";
 
 import coffeeBack from "../assets/img/robert-bye-95vx5QVl9x4-unsplash 2.png";
 import sakaLogo from "../assets/img/sakacoffee.png";
 import googleLogo from "../assets/img/google-logo-png-suite-everything-you-need-know-about-google-newest-0 2.png";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import authAction from "../redux/actions/auth";
 
 function Login({ navigate }) {
-  const [userInfo, setUserInfo] = useState({});
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const [body, setBody] = useState({ email: "", password: "" });
-  const [clickLogin, setClickLogin] = useState(false);
-
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-    setUserInfo(userInfo);
-    if (!userInfo) return;
-    navigate("/");
-  }, [clickLogin]);
-
-  const submitHandler = async (e) => {
-    // setbody({...body, email:e.target.email.value, password:e.target.password.value})
-    e.preventDefault();
-    if (!body.email || !body.password) console.log("Empty");
-    try {
-      const loginRequest = await login(body);
-      localStorage.setItem("userInfo", JSON.stringify(loginRequest.data.data));
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setClickLogin(!clickLogin);
-    }
-  };
 
   const changeHandler = (e) => {
     setBody({ ...body, [e.target.name]: e.target.value });
     console.log(body);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const loginSuccess = () => {
+      toast.success(`Congrats! Login successfully! Welcome ${body.email}`);
+      console.log("success");
+      navigate("/");
+    };
+
+    const loginDenied = (error) => {
+      toast.error(error);
+      console.log("error");
+    };
+
+    dispatch(authAction.loginThunk(body, loginSuccess, loginDenied));
   };
 
   return (
@@ -97,7 +95,7 @@ function Login({ navigate }) {
                 </div>
               </div>
               <button type="submit" className={styles["btn-signup"]}>
-                Login
+                {isLoading ? "Loading..." : "Login"}
               </button>
               <div className={styles["btn-google"]}>
                 <img src={googleLogo} alt="google logo" />

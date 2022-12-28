@@ -20,7 +20,7 @@ function Header({ navigate }) {
   const text = state.text;
   const title = state.title;
   // const [profile, setProfile] = useState({});
-  const profile = useSelector((state) => state.profile.profile);
+  // const profile = useSelector((state) => state.profile.profile);
   const [search, setSearch] = useState(() => "");
   const [show, setShow] = useState(false);
   // console.log(element);
@@ -83,9 +83,9 @@ function Header({ navigate }) {
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProfileActions());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getProfileActions());
+  // }, []);
 
   return (
     <nav className={styles.navbar}>
@@ -223,7 +223,7 @@ function Header({ navigate }) {
               }}
             >
               <img
-                src={`http://localhost:8060/${profile.image}`}
+                // src={`http://localhost:8060/${profile.image}`}
                 alt="profile"
               />
             </div>

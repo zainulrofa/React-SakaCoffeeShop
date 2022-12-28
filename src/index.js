@@ -5,16 +5,30 @@ import "./index.css";
 
 import router from "./helpers/router";
 import { RouterProvider } from "react-router-dom";
-import { Provider as ReduxProvider } from "react-redux";
+import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
-import reduxStore from "./redux/store";
+import store, { persistedStore } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ReduxProvider store={reduxStore}>
-      <RouterProvider router={router} />
-    </ReduxProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistedStore}>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          theme="light"
+        />
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 

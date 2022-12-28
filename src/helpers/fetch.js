@@ -71,16 +71,16 @@ export const editProduct = (data, token, id) => {
 
 export const getProfile = () => {
   const login = JSON.parse(localStorage.getItem("userInfo"));
-  const token = login.token;
-  console.log(token);
+  // const token = login.token;
+  // console.log(token);
   const URL =
     // process.env.REACT_APP_BACKEND_HOST +
     "http://localhost:8060/api/v1/users/profile_user";
   console.log(URL);
   return axios.get(URL, {
-    headers: {
-      "access-token": token,
-    },
+    // headers: {
+    //   "access-token": token,
+    // },
   });
 };
 

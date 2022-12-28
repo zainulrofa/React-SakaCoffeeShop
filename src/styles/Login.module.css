@@ -270,3 +270,32 @@ form {
         width: 75%;
     }
 }
+
+@media screen and (max-width: 428px) {
+    .logo-detail h2 {
+        display: none;
+    }
+
+    .btn-signup {
+        margin-top: 2rem;
+        padding: 1rem;   
+    }
+
+    .btn-google {
+        margin-top: 1rem;
+        padding: 1.5rem 2rem;
+    }
+
+    .get-member {
+        flex-direction: column;
+        justify-content: center;
+        left: 4rem;
+        bottom: -2rem;
+    }
+
+    .info-member h2 {
+        width: 100%;
+        font-size: 2rem;
+        font-weight: 500;
+    }
+}

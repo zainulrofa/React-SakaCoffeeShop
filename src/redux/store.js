@@ -1,16 +1,22 @@
-import {
-  legacy_createStore as createStore,
-  applyMiddleware,
-  combineReducers,
-} from "redux";
-import rpm from "redux-promise-middleware";
-// import logger from "redux-logger";
-import productsReducer from "./reducers/product";
+import logger from "redux-logger";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { configureStore } from "@reduxjs/toolkit";
+import reducers from "./reducers";
 
-const middleware = applyMiddleware(rpm);
-const reducers = combineReducers({
-  products: productsReducer,
+const persistConfig = {
+  key: "saka-coffee",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ thunk: true, serializableCheck: false }).concat(
+      logger
+    ),
 });
-const store = createStore(reducers, middleware);
 
+export const persistedStore = persistStore(store);
 export default store;
