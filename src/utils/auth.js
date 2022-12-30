@@ -34,8 +34,14 @@ export const reset = (body) => {
   return axios.patch(URL, body);
 };
 
+export const editPwd = (body, token) => {
+  const URL = `${BaseUrl}users/account`;
+  // console.log('util', body);
+  return axios.patch(URL, body, config(token));
+};
+
 export const logout = (token) => {
-  const URL = `${BaseUrl}api/auths/logout`;
+  const URL = `${BaseUrl}auth/logout`;
   // console.log('util', body);
   return axios.delete(URL, config(token));
 };

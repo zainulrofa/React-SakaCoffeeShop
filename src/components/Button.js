@@ -7,6 +7,7 @@ function Button(props) {
     <button
       type={props.type}
       className={`${styles.btn} ${styles[props.variant]}`}
+      onClick={props.onClick}
     >
       <h4 className={`${styles["btn-title"]} ${styles[props.font]}`}>
         {props.text}

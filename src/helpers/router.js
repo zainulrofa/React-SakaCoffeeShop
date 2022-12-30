@@ -39,13 +39,17 @@ const router = createBrowserRouter([
     path: "/reset-password",
     element: <ResetPassword />,
   },
+  // {
+  //   path: "/profile",
+  //   element: (
+  //     <PrivateRoute>
+  //       <Profile />
+  //     </PrivateRoute>
+  //   ),
+  // },
   {
     path: "/profile",
-    element: (
-      <PrivateRoute>
-        <Profile />
-      </PrivateRoute>
-    ),
+    element: <Profile />,
   },
   {
     path: "/history",

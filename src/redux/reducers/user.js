@@ -1,23 +1,18 @@
 import ACTION_STRING from "../actions/actionStrings";
 
 const initialState = {
-  userData: {
-    id: "",
-    token: "",
-    role: "",
-  },
+  user: {},
   isLoading: false,
   isError: false,
   isFulfilled: false,
-  error: "",
+  error: null,
 };
 
-const authReducer = (prevState = initialState, { type, payload }) => {
+const userReducer = (prevState = initialState, { type, payload }) => {
   const {
-    register,
-    login,
-    forgot,
-    reset,
+    getUser,
+    editProfile,
+    userReset,
     editPassword,
     logout,
     pending,
@@ -25,104 +20,52 @@ const authReducer = (prevState = initialState, { type, payload }) => {
     fulfilled,
   } = ACTION_STRING;
   switch (type) {
-    case register + pending:
+    case getUser + pending:
       return {
         ...prevState,
         isLoading: true,
         isError: false,
         isFulfilled: false,
       };
-    case register + rejected:
-      return {
-        ...prevState,
-        isError: true,
-        isLoading: false,
-        error: payload.error.response.data.status,
-      };
-    case register + fulfilled:
-      return {
-        ...prevState,
-        isLoading: false,
-      };
-
-    case login + pending:
-      return {
-        ...prevState,
-        isLoading: true,
-        isError: false,
-        isFulfilled: false,
-      };
-    case login + rejected:
+    case getUser + rejected:
       return {
         ...prevState,
         isError: true,
         isLoading: false,
         isFulfilled: false,
-        userData: {
-          id: null,
-          token: null,
-        },
-        error: payload.error.response.data.status,
+        error: payload.error.message,
       };
-    case login + fulfilled:
+    case getUser + fulfilled:
+      console.log(payload);
       return {
         ...prevState,
-        isError: false,
         isLoading: false,
+        isError: false,
         isFulfilled: true,
-        userData: {
-          id: payload.data.data.id,
-          token: payload.data.data.token,
-          role: payload.data.data.role,
-        },
-        error: "",
+        user: payload.data.data[0],
       };
-
-    case forgot + pending:
+    case editProfile + pending:
       return {
         ...prevState,
         isLoading: true,
         isError: false,
         isFulfilled: false,
       };
-    case forgot + rejected:
+    case editProfile + rejected:
       return {
         ...prevState,
         isError: true,
         isLoading: false,
         isFulfilled: false,
-        error: payload.error.response.data.status,
+        error: payload.error.message,
       };
-    case forgot + fulfilled:
+    case editProfile + fulfilled:
       return {
         ...prevState,
-        isError: false,
         isLoading: false,
+        isError: false,
         isFulfilled: true,
-        error: "",
-      };
-
-    case reset + pending:
-      return {
-        ...prevState,
-        isLoading: true,
-        isError: false,
-        isFulfilled: false,
-      };
-    case reset + rejected:
-      return {
-        ...prevState,
-        isError: true,
-        isLoading: false,
-        isFulfilled: false,
-        error: payload.error.response.data.msg,
-      };
-    case reset + fulfilled:
-      return {
-        ...prevState,
-        isError: false,
-        isLoading: false,
-        isFulfilled: true,
+        profile: { ...prevState.profile, ...payload.data.data },
       };
 
     case editPassword + pending:
@@ -138,13 +81,13 @@ const authReducer = (prevState = initialState, { type, payload }) => {
         isError: true,
         isLoading: false,
         isFulfilled: false,
-        error: payload.error.response.data.msg,
+        error: payload.error.message,
       };
     case editPassword + fulfilled:
       return {
         ...prevState,
-        isError: false,
         isLoading: false,
+        isError: false,
         isFulfilled: true,
       };
 
@@ -166,9 +109,12 @@ const authReducer = (prevState = initialState, { type, payload }) => {
     case logout + fulfilled:
       return initialState;
 
+    case userReset:
+      return initialState;
+
     default:
       return prevState;
   }
 };
 
-export default authReducer;
+export default userReducer;

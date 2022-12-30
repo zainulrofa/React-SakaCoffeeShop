@@ -5,17 +5,20 @@ import withNavigate from "../helpers/withNavigate";
 // import HeaderLogin from "../components/HeaderLogin";
 // import NavbarSignup from "../components/NavbarSignup";
 
-import defaultImg from "../assets/img/default-photo.png";
+import defaultImg from "../assets/img/default-img.png";
 import sakaLogo from "../assets/img/sakacoffee.png";
 import searching from "../assets/img/Searching.png";
 import chat from "../assets/img/chat.png";
-import { getProfile } from "../helpers/fetch";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileActions } from "../redux/actions/profile";
+import userAction from "../redux/actions/user";
 
 function Header({ navigate }) {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.userData.token);
+  const role = useSelector((state) => state.auth.userData.role);
+  const user = useSelector((state) => state.user.user);
   const [state, setState] = useState("");
   const text = state.text;
   const title = state.title;
@@ -23,15 +26,7 @@ function Header({ navigate }) {
   // const profile = useSelector((state) => state.profile.profile);
   const [search, setSearch] = useState(() => "");
   const [show, setShow] = useState(false);
-  // console.log(element);
-
-  const token = JSON.parse(localStorage.getItem("userInfo"))
-    ? JSON.parse(localStorage.getItem("userInfo")).token
-    : "";
-
-  const role = JSON.parse(localStorage.getItem("userInfo"))
-    ? JSON.parse(localStorage.getItem("userInfo")).payload.role
-    : "";
+  // console.log(user);
 
   function slide() {
     setState((state) => ({
@@ -54,21 +49,6 @@ function Header({ navigate }) {
     return navigate(`/product?search=${search}`);
   };
 
-  // const getDataProfile = async () => {
-  //   try {
-  //     const result = await getProfile();
-  //     // console.log(result.data.result[0]);
-  //     setProfile(result.data.result[0]);
-  //     console.log(result);
-  //   } catch (error) {
-  //     // console.log(error);
-  //     // console.log(error.response.data.statusCode);
-  //     if (error.response.data.statusCode === 403) {
-  //       navigate("/login");
-  //     }
-  //   }
-  // };
-
   const handleLogout = async () => {
     try {
       localStorage.removeItem("userInfo");
@@ -81,11 +61,10 @@ function Header({ navigate }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getProfileActions());
-  // }, []);
+  useEffect(() => {
+    dispatch(userAction.getUserThunk(token));
+  }, [dispatch, token]);
 
   return (
     <nav className={styles.navbar}>
@@ -222,10 +201,7 @@ function Header({ navigate }) {
                 navigate("/profile");
               }}
             >
-              <img
-                // src={`http://localhost:8060/${profile.image}`}
-                alt="profile"
-              />
+              <img src={user.image ? user.image : defaultImg} alt="profile" />
             </div>
           </section>
         )

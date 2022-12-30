@@ -1,5 +1,12 @@
 import ACTION_STRING from "./actionStrings";
-import { register, login, forgot, reset, logout } from "../../utils/auth";
+import {
+  register,
+  login,
+  forgot,
+  reset,
+  logout,
+  editPwd,
+} from "../../utils/auth";
 
 const registerPending = () => ({
   type: ACTION_STRING.register.concat(ACTION_STRING.pending),
@@ -68,6 +75,20 @@ const logoutRejected = (error) => ({
 
 const logoutFulfilled = (data) => ({
   type: ACTION_STRING.logout.concat(ACTION_STRING.fulfilled),
+  payload: { data },
+});
+
+const editPassPending = () => ({
+  type: ACTION_STRING.editPassword.concat(ACTION_STRING.pending),
+});
+
+const editPassRejected = (error) => ({
+  type: ACTION_STRING.editPassword.concat(ACTION_STRING.rejected),
+  payload: { error },
+});
+
+const editPassFulfilled = (data) => ({
+  type: ACTION_STRING.editPassword.concat(ACTION_STRING.fulfilled),
   payload: { data },
 });
 
@@ -151,6 +172,22 @@ const logoutThunk = (token, cbSuccess, cbDenied) => {
   };
 };
 
+const editPassThunk = (body, token, cbSuccess, cbDenied) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editPassPending());
+      console.log("redux", body);
+      const result = await editPwd(body, token);
+      dispatch(editPassFulfilled(result.data));
+      typeof cbSuccess === "function" && cbSuccess();
+    } catch (error) {
+      dispatch(editPassRejected(error));
+      console.log(error);
+      typeof cbDenied === "function" && cbDenied(error.response.data.status);
+    }
+  };
+};
+
 const resetState = () => {
   return {
     type: ACTION_STRING.authReset,
@@ -164,6 +201,7 @@ const authAction = {
   resetThunk,
   logoutThunk,
   resetState,
+  editPassThunk,
 };
 
 export default authAction;
