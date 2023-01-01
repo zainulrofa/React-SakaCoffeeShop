@@ -5,16 +5,16 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Card from "../components/CardProduct";
 import CardPromo from "../components/CardPromo";
+import Loading from "../components/Loading";
 
 // import promoImage from "../assets/img/image 29.png";
 import { useState, useEffect } from "react";
 import { useMemo } from "react";
-import { getData, getPromo } from "../helpers/fetch";
 import withSearchParams from "../helpers/withSearchParams";
 import { createSearchParams, Navigate, useLocation } from "react-router-dom";
 import withNavigate from "../helpers/withNavigate";
 import { connect, useDispatch, useSelector } from "react-redux";
-import action from "../redux/actions/product";
+import productAction from "../redux/actions/product";
 
 // const userinfo = JSON.parse(localStorage.getItem("userInfo"));
 // let admin = null;
@@ -33,20 +33,19 @@ const useQuery = () => {
 const Product = ({ setSearchParams, navigate }) => {
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.data);
-  const totalPage = useSelector((state) => state.products.meta.totalPage);
-  const nextPage = useSelector((state) => state.products);
-  const getQuery = useQuery();
+  const products = useSelector((state) => state.product.data);
+  const isLoading = useSelector((state) => state.product.isLoading);
+  const totalPage = useSelector((state) => state.product.pagination.totalPage);
+  const nextPage = useSelector((state) => state.product);
   const [promo, setPromo] = useState([]);
   // const [product, setProduct] = useState([]);
   // const [totalPage, setTotalPage] = useState(null);
   const [query, setQuery] = useState({
-    search: getQuery.get("search") ? getQuery.get("search") : "",
-    // categories: getQuery.get("categories") ? getQuery.get("categories") : "",
-    // minPrice: getQuery.get("minPrice") ? getQuery.get("minPrice") : 0,
-    // maxPrice: getQuery.get("maxPrice") ? getQuery.get("maxPrice") : 1000000,
-    sort: getQuery.get("sort") ? getQuery.get("sort") : "popular",
-    page: getQuery.get("page") ? getQuery.get("page") : 1,
+    search: "",
+    category: "",
+    page: 1,
+    sort: "total_selling",
+    order: "",
   });
   const [selected, setSelected] = useState("favorite");
 
@@ -68,14 +67,14 @@ const Product = ({ setSearchParams, navigate }) => {
   //   }
   // };
   // console.log(totalPage);
-  useEffect(() => {
-    // fetchData(query);
-    dispatch(action.getProductsAction(query));
-    const urlSearchParams = createSearchParams({ ...query });
-    setSearchParams(urlSearchParams);
-    // setTotalPage(products.meta.totalPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  // useEffect(() => {
+  //   // fetchData(query);
+  //   dispatch(action.getProductsAction(query));
+  //   const urlSearchParams = createSearchParams({ ...query });
+  //   setSearchParams(urlSearchParams);
+  //   // setTotalPage(products.meta.totalPage);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [query]);
 
   // const [allProduct, setAllProduct] = useState([]);
   // const [param, setParam] = useState({
@@ -83,15 +82,15 @@ const Product = ({ setSearchParams, navigate }) => {
   //   sort: "",
   // });
 
-  const getAllPromo = async () => {
-    try {
-      const result = await getPromo();
-      console.log(result.data.result);
-      setPromo(result.data.result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getAllPromo = async () => {
+  //   try {
+  //     const result = await getPromo();
+  //     console.log(result.data.result);
+  //     setPromo(result.data.result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // const getAllProduct = async () => {
   //   try {
@@ -166,8 +165,8 @@ const Product = ({ setSearchParams, navigate }) => {
   // });
 
   useEffect(() => {
-    getAllPromo();
-  }, []);
+    dispatch(productAction.getAllThunk(query));
+  }, [dispatch, query]);
 
   return (
     <>
@@ -237,7 +236,7 @@ const Product = ({ setSearchParams, navigate }) => {
                   onClick={() => {
                     setSelected("coffee");
                     setQuery({
-                      categories: "Coffee",
+                      category: "coffee",
                       page: 1,
                     });
                     const urlSearchParams = createSearchParams({ ...query });
@@ -254,7 +253,7 @@ const Product = ({ setSearchParams, navigate }) => {
                   onClick={() => {
                     setSelected("non coffee");
                     setQuery({
-                      categories: "Non Coffee",
+                      category: "non coffee",
                       page: 1,
                     });
                     const urlSearchParams = createSearchParams({ ...query });
@@ -271,7 +270,7 @@ const Product = ({ setSearchParams, navigate }) => {
                   onClick={() => {
                     setSelected("foods");
                     setQuery({
-                      categories: "Foods",
+                      category: "foods",
                       page: 1,
                     });
                   }}
@@ -295,7 +294,16 @@ const Product = ({ setSearchParams, navigate }) => {
                   <div className={styles["dropdown-item"]}>
                     <p
                       onClick={() => {
-                        setQuery({ ...query, sort: "newest" });
+                        setQuery({
+                          ...query,
+                          sort: "created_at",
+                          order: "desc",
+                          page: 1,
+                        });
+                        const urlSearchParams = createSearchParams({
+                          ...query,
+                        });
+                        setSearchParams(urlSearchParams);
                       }}
                     >
                       newest
@@ -305,7 +313,9 @@ const Product = ({ setSearchParams, navigate }) => {
                     <p
                       onClick={() => {
                         setQuery({
-                          sort: "oldest",
+                          ...query,
+                          sort: "created_at",
+                          order: "asc",
                           page: 1,
                         });
                         const urlSearchParams = createSearchParams({
@@ -321,7 +331,9 @@ const Product = ({ setSearchParams, navigate }) => {
                     <p
                       onClick={() => {
                         setQuery({
-                          sort: "priciest",
+                          ...query,
+                          sort: "price",
+                          order: "desc",
                           page: 1,
                         });
                         const urlSearchParams = createSearchParams({
@@ -337,7 +349,9 @@ const Product = ({ setSearchParams, navigate }) => {
                     <p
                       onClick={() => {
                         setQuery({
-                          sort: "cheapest",
+                          ...query,
+                          sort: "price",
+                          order: "asc",
                           page: 1,
                         });
                         const urlSearchParams = createSearchParams({
@@ -366,15 +380,21 @@ const Product = ({ setSearchParams, navigate }) => {
                 />
               );
             })} */}
-              {products.map((e) => (
-                <Card
-                  text={e.product_name}
-                  price={e.price}
-                  image={e.image}
-                  id={e.id}
-                  key={e.id}
-                />
-              ))}
+              {isLoading ? (
+                <Loading />
+              ) : (
+                products?.map((e) => {
+                  return (
+                    <Card
+                      text={e.product_name}
+                      price={e.price}
+                      image={e.image}
+                      id={e.id}
+                      key={e.id}
+                    />
+                  );
+                })
+              )}
             </div>
           </main>
           <div className={`${styles["paginate-container"]}`}>

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Button from "../components/Button";
+import Loading from "../components/Loading";
 import styles from "../styles/ProductDetails.module.css";
 import withNavigate from "../helpers/withNavigate";
 
 import { useParams } from "react-router-dom";
 import { getProductById } from "../helpers/fetch";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import productAction from "../redux/actions/product";
 
 function ProductDetails({ navigate }) {
   // const [state, setState] = useState({ count: 0, size: "size" });
@@ -33,8 +36,12 @@ function ProductDetails({ navigate }) {
   // }
 
   const { id } = useParams();
-  const [product, setProduct] = useState({});
-  // console.log(product);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.userData.token);
+  const isLoading = useSelector((state) => state.product.isLoading);
+  const product = useSelector((state) => state.product.detail);
+  // const [product, setProduct] = useState({});
+  console.log(product);
   const currency = (price) => {
     return (
       "IDR " +
@@ -43,22 +50,22 @@ function ProductDetails({ navigate }) {
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     );
   };
-  const getDetail = async () => {
-    try {
-      const result = await getProductById(id);
-      // console.log(result.data.result.data);
-      setProduct(result.data.result.data);
-    } catch (error) {
-      console.log(error);
-      if (error.response.data.statusCode === 403) {
-        navigate("/login");
-      }
-    }
-  };
+  // const getDetail = async () => {
+  //   try {
+  //     const result = await getProductById(id);
+  //     // console.log(result.data.result.data);
+  //     setProduct(result.data.result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //     if (error.response.data.statusCode === 403) {
+  //       navigate("/login");
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
-    getDetail();
-  }, []);
+    dispatch(productAction.getDetailThunk(id, token));
+  }, [dispatch, id, token]);
 
   const [count, setCount] = useState(1);
   const [size, setSize] = useState("Size");
@@ -94,10 +101,14 @@ function ProductDetails({ navigate }) {
           <div className="row">
             <div className="col-12">
               <div className={styles.title}>
-                <p>
-                  {product.category_name}
-                  <span>&gt; {product.product_name}</span>
-                </p>
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <p>
+                    {product.category}
+                    <span> &gt; {product.product_name}</span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -107,10 +118,11 @@ function ProductDetails({ navigate }) {
             <div className="col-lg-5 col-12 pb-5">
               <div className={styles["left-content"]}>
                 <div className={styles["product-img"]}>
-                  <img
-                    src={`http://localhost:8060/${product.image}`}
-                    alt="cold-brew"
-                  ></img>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <img src={`${product.image}`} alt="cold-brew"></img>
+                  )}
                 </div>
                 <h1>{product.product_name}</h1>
                 <h3> {currency(product.price * count)}</h3>
@@ -174,21 +186,23 @@ function ProductDetails({ navigate }) {
           <div className={`${styles.cta} row text-center`}>
             <div className="col-lg-8 offset-lg-1">
               <div className={styles["checkout-bar"]}>
-                <div className={styles.left}>
-                  <div className={styles["checkout-img"]}>
-                    <img
-                      src={`http://localhost:8060/${product.image}`}
-                      alt="cold-brew"
-                    ></img>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <div className={styles.left}>
+                    <div className={styles["checkout-img"]}>
+                      <img src={`${product.image}`} alt="cold-brew"></img>
+                    </div>
+                    <div className={styles["checkout-detail"]}>
+                      <h5>{product.product_name}</h5>
+                      <p>
+                        x{count}
+                        <span> {size}</span>
+                      </p>
+                    </div>
                   </div>
-                  <div className={styles["checkout-detail"]}>
-                    <h5>{product.product_name}</h5>
-                    <p>
-                      x{count}
-                      <span> {size}</span>
-                    </p>
-                  </div>
-                </div>
+                )}
+
                 <div className={styles["check-count"]}>
                   <div className={styles.btn} onClick={decreamentCount}>
                     <div className={styles.circle}></div>

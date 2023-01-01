@@ -3,10 +3,12 @@ import styles from "../styles/CardProduct.module.css";
 import withNavigate from "../helpers/withNavigate";
 
 import pencil from "../assets/img/pencil.png";
+import { useSelector } from "react-redux";
 
 // import veggieImage from "../assets/img/image1.png";
 
 function CardProduct(props) {
+  const role = useSelector((state) => state.auth.userData.role);
   // const userinfo = JSON.parse(localStorage.getItem("userInfo"));
   // let admin = null;
 
@@ -14,7 +16,6 @@ function CardProduct(props) {
   //   admin = userinfo.payload.role;
   // console.log(admin);
   // console.log(userinfo.payload);
-  const role = JSON.parse(localStorage.getItem("userInfo")).payload.role || "";
 
   const currency = (price) => {
     return (
@@ -30,7 +31,7 @@ function CardProduct(props) {
       <div className={styles["content-bar"]}>
         <img
           className={styles["product-image"]}
-          src={`http://localhost:8060/${props.image}`}
+          src={`${props.image}`}
           alt=""
           onClick={() => {
             props.navigate(`/product-detail/${props.id}`);
