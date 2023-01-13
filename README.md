@@ -12,8 +12,8 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [Requirements](#requirements)
-- [Usage](#usage-for-development)
+- [How to Run the App](#How to Run the Application)
+- [Deployment](#deployment)
 - [Screenshots](#screenshots)
 - [Related Project](#previous-project)
 - [Contributors](#contributors)
@@ -53,7 +53,7 @@ $ npm install
 Configure .env file by create file named .env inside project folder and add this line to the file:
 
 ```
-NEXT_PUBLIC_BACKEND_URL = "https://coffebug.vercel.app/api"
+REACT_APP_BACKEND_HOST = "https://saka-backend.vercel.app/api"
 ```
 
 ### 4. Run projects
@@ -72,7 +72,7 @@ You may also see any lint errors in the console.
 
 ## Deployment
 
-[Vercel deploy link](https://coffebug-online.vercel.app/)
+[Vercel deploy link](https://react-saka-coffee-shop.vercel.app/)
 
 ## Screenshots
 
