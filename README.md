@@ -12,7 +12,7 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
-- [How to Run the App](#How to Run the Application)
+- [How to Run the App](#how-to-run-the-application)
 - [Deployment](#deployment)
 - [Screenshots](#screenshots)
 - [Related Project](#previous-project)
