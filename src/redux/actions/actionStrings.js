@@ -25,6 +25,7 @@ const ACTION_STRING = {
   getHistory: "GET_HISTORY",
   authReset: "AUTH_RESET",
   userReset: "USER_RESET",
+  cartReset: "CART_RESET",
   transactionReset: "TRANSACTION_RESET",
   pending: `_${ActionType.Pending}`,
   fulfilled: `_${ActionType.Fulfilled}`,

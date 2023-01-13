@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+
 class PrivateRoute extends React.Component {
   render() {
     const { allowedRoles = [], children } = this.props;
@@ -15,4 +16,5 @@ class PrivateRoute extends React.Component {
     return children;
   }
 }
+
 export default PrivateRoute;

@@ -11,6 +11,8 @@ import { getProductById } from "../helpers/fetch";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import productAction from "../redux/actions/product";
+import transactionAction from "../redux/actions/transaction";
+import { toast } from "react-toastify";
 
 function ProductDetails({ navigate }) {
   // const [state, setState] = useState({ count: 0, size: "size" });
@@ -41,7 +43,7 @@ function ProductDetails({ navigate }) {
   const isLoading = useSelector((state) => state.product.isLoading);
   const product = useSelector((state) => state.product.detail);
   // const [product, setProduct] = useState({});
-  console.log(product);
+  // console.log(product);
   const currency = (price) => {
     return (
       "IDR " +
@@ -67,20 +69,36 @@ function ProductDetails({ navigate }) {
     dispatch(productAction.getDetailThunk(id, token));
   }, [dispatch, id, token]);
 
+  const [body, setBody] = useState({
+    product_item: [],
+    product_item_view: [],
+    delivery_methods_id: null,
+    set_time: null,
+  });
   const [count, setCount] = useState(1);
-  const [size, setSize] = useState("Size");
+  const [method, setMethod] = useState(1);
+  const [size, setSize] = useState(1);
+
+  console.log(body);
 
   function reguler() {
-    setSize(() => "Reguler");
+    setSize(() => 1);
   }
 
   function large() {
-    setSize(() => "Large");
+    setSize(() => 2);
   }
 
   function xtra() {
-    setSize(() => "Extra Large");
+    setSize(() => 3);
   }
+
+  const sizeName = () => {
+    let sizeValue = "Reguler";
+    if ((size = "2")) sizeValue = "Large";
+    if ((size = "3")) sizeValue = "XL";
+    return sizeValue;
+  };
 
   function decreamentCount() {
     setCount((prevCount) => {
@@ -92,6 +110,30 @@ function ProductDetails({ navigate }) {
   function increamentCount() {
     setCount((prevCount) => prevCount + 1);
   }
+
+  const handleCart = () => {
+    const product_item = {
+      products_id: product.id,
+      size_products_id: size,
+      quantity: count,
+      price: product.price * count,
+    };
+    const product_item_view = {
+      image: product.image,
+      product_name: product.product_name,
+      quantity: count,
+      size_product_name: size,
+      price: product.price * count,
+    };
+    setBody({
+      ...body,
+      product_item: [product_item],
+      product_item_view: [product_item_view],
+      delivery_methods_id: method,
+    });
+    dispatch(transactionAction.cart(body));
+    return toast.success("Cart added successfully");
+  };
 
   return (
     <>
@@ -126,7 +168,7 @@ function ProductDetails({ navigate }) {
                 </div>
                 <h1>{product.product_name}</h1>
                 <h3> {currency(product.price * count)}</h3>
-                <Button text="Add to Cart" />
+                <Button text="Add to Cart" onClick={handleCart} />
                 <Button text="Ask to Staff" variant="color-1" font="style-1" />
               </div>
             </div>
@@ -161,13 +203,28 @@ function ProductDetails({ navigate }) {
                   <h3>Choose Delivery Methods</h3>
                 </div>
                 <div className={styles.methods}>
-                  <div className={styles.bar}>
+                  <div
+                    className={styles.bar}
+                    onClick={() => {
+                      setMethod(1);
+                    }}
+                  >
                     <p>Dine in</p>
                   </div>
-                  <div className={styles.bar}>
+                  <div
+                    className={styles.bar}
+                    onClick={() => {
+                      setMethod(3);
+                    }}
+                  >
                     <p>Door Delivery</p>
                   </div>
-                  <div className={styles.bar}>
+                  <div
+                    className={styles.bar}
+                    onClick={() => {
+                      setMethod(2);
+                    }}
+                  >
                     <p>Pick up</p>
                   </div>
                 </div>
@@ -197,7 +254,7 @@ function ProductDetails({ navigate }) {
                       <h5>{product.product_name}</h5>
                       <p>
                         x{count}
-                        <span> {size}</span>
+                        <span> {sizeName}</span>
                       </p>
                     </div>
                   </div>

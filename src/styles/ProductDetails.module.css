@@ -48,6 +48,7 @@
 .product-img img {
     border-radius: 50%;
     width: 20rem;
+    aspect-ratio: 1;
 }
 
 .right-content {

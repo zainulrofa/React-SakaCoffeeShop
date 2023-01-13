@@ -191,7 +191,12 @@ function Header({ navigate }) {
                 <img src={searching} alt="searching" />
               </div>
             </form>
-            <div className={styles.chat}>
+            <div
+              className={styles.chat}
+              onClick={() => {
+                navigate("/payment");
+              }}
+            >
               <div className={styles.notif}>1</div>
               <img src={chat} alt="" />
             </div>

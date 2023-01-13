@@ -59,13 +59,17 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
+  // {
+  //   path: "/payment",
+  //   element: (
+  //     <PrivateRoute>
+  //       <Payment />
+  //     </PrivateRoute>
+  //   ),
+  // },
   {
     path: "/payment",
-    element: (
-      <PrivateRoute>
-        <Payment />
-      </PrivateRoute>
-    ),
+    element: <Payment />,
   },
   {
     path: "/product",

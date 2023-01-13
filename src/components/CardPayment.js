@@ -13,7 +13,7 @@ class CardPayments extends React.Component {
             <p className={styles["detail-item"]}>x {qty}</p>
             <p className={styles["detail-item"]}>{size}</p>
           </div>
-          <p className={styles.price}>{price}</p>
+          <p className={styles.price}>IDR {price}</p>
         </div>
       </>
     );
